@@ -2605,11 +2605,14 @@ button.run-btn:disabled {
 .github-link {
   display: flex;
   align-items: center;
-  opacity: 0.8;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(6px);
   transition: 0.3s ease;
 }
 
 .github-link:hover {
-  opacity: 1;
-  transform: scale(1.1);
+  background: rgba(255,255,255,0.1);
+  transform: scale(1.05);
 }
