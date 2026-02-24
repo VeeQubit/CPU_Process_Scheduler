@@ -2601,3 +2601,15 @@ button.run-btn:disabled {
   color: #cbd5e1;
   font-weight: 600;
 }
+
+.github-link {
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  transition: 0.3s ease;
+}
+
+.github-link:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
