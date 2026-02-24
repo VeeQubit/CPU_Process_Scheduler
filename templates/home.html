@@ -1,243 +1,335 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>CPU Scheduling Simulator</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CPU Scheduler • Home</title>
 
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Your existing CSS -->
+  <link rel="stylesheet" href="/static/style.css">
 
-  <style>
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f172a, #0b1220);
-      color: white;
-    }
-
-    nav {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px 8%;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: rgba(15,23,42,0.9);
-      backdrop-filter: blur(10px);
-    }
-
-    nav h2 {
-      background: linear-gradient(90deg,#7c3aed,#06b6d4);
-      background-clip: text;
--webkit-background-clip: text;
-color: transparent;
-    }
-
-    nav a {
-      color: #cbd5e1;
-      text-decoration: none;
-      margin-left: 25px;
-      font-size: 0.9rem;
-    }
-
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 100px 8%;
-      gap: 40px;
-    }
-
-    .hero-text {
-      max-width: 600px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg,#7c3aed,#06b6d4);
-      background-clip: text;
--webkit-background-clip: text;
-color: transparent;
-    }
-
-    .hero p {
-      color: #cbd5e1;
-      line-height: 1.6;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 30px;
-      border-radius: 30px;
-      background: linear-gradient(90deg,#7c3aed,#06b6d4);
-      text-decoration: none;
-      color: white;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 40px rgba(124,58,237,0.5);
-    }
-
-    section {
-      padding: 80px 8%;
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 2rem;
-      background: linear-gradient(90deg,#7c3aed,#06b6d4);
-      background-clip: text;
--webkit-background-clip: text;
-color: transparent;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 30px;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.05);
-      padding: 25px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    }
-
-    .card i {
-      font-size: 1.8rem;
-      margin-bottom: 15px;
-      color: #06b6d4;
-    }
-
-    .video-container {
-      display: flex;
-      justify-content: center;
-    }
-
-    iframe {
-      width: 100%;
-      max-width: 800px;
-      height: 450px;
-      border-radius: 15px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px;
-      color: #94a3b8;
-      font-size: 0.9rem;
-    }
-
-    @media(max-width: 900px){
-      .hero {
-        flex-direction: column;
-        text-align: center;
-      }
-    }
-
-  </style>
+  <!-- PWA + SEO (optional but recommended) -->
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="description" content="Visualize and compare CPU scheduling algorithms with animated Gantt charts and performance metrics.">
 </head>
 
-<body>
+<body class="home-body">
 
-<nav>
-  <h2>CPU Scheduler</h2>
-  <div>
-    <a href="#features">Features</a>
-    <a href="#how">How It Works</a>
-    <a href="#demo">Demo</a>
-    <a href="/simulator">Simulator</a>
+  <!-- Background decorations -->
+  <div class="bg-blobs" aria-hidden="true">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <span class="grid"></span>
   </div>
-</nav>
 
-<section class="hero">
-  <div class="hero-text">
-    <h1>Understand CPU Scheduling Visually</h1>
-    <p>
-      Compare FCFS, SRTF, Round Robin and Priority scheduling
-      with animated Gantt charts and automatic performance analysis.
-    </p>
-    <a href="/simulator" class="cta-btn">Launch Simulator</a>
-  </div>
-</section>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <span class="brand-dot"></span>
+        <span class="brand-text">CPU Scheduler</span>
+      </a>
 
-<section id="features">
-  <h2>Key Features</h2>
-  <div class="grid">
-    <div class="card">
-      <i class="fa-solid fa-microchip"></i>
-      <h3>Real Implementation</h3>
-      <p>Accurate backend logic built using Flask.</p>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#demo">Demo</a>
+        <a class="nav-cta" href="/simulator">Simulator</a>
+      </nav>
+
+      <button class="nav-burger" aria-label="Open menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="card">
-      <i class="fa-solid fa-chart-line"></i>
-      <h3>Performance Metrics</h3>
-      <p>Turnaround, Waiting & Response time analysis.</p>
+
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="nav-mobile hidden">
+      <a href="#features" onclick="toggleMenu()">Features</a>
+      <a href="#how" onclick="toggleMenu()">How it works</a>
+      <a href="#demo" onclick="toggleMenu()">Demo</a>
+      <a class="nav-cta" href="/simulator" onclick="toggleMenu()">Simulator</a>
     </div>
-    <div class="card">
-      <i class="fa-solid fa-chart-gantt"></i>
-      <h3>Animated Gantt</h3>
-      <p>Visual execution timeline for each algorithm.</p>
-    </div>
-    <div class="card">
-      <i class="fa-solid fa-trophy"></i>
-      <h3>Best Algorithm</h3>
-      <p>Auto-detects the optimal algorithm.</p>
-    </div>
-  </div>
-</section>
+  </header>
 
-<section id="how">
-  <h2>How It Works</h2>
-  <div class="grid">
-    <div class="card">1️⃣ Add Processes</div>
-    <div class="card">2️⃣ Set Time Quantum</div>
-    <div class="card">3️⃣ Run Simulation</div>
-    <div class="card">4️⃣ Compare Results</div>
-  </div>
-</section>
+  <!-- HERO -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          Interactive OS Learning Tool
+        </div>
 
-<section id="demo">
-  <h2>Watch Demo</h2>
-  <div class="video-container">
-    <!-- Replace with your YouTube video link -->
-    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-            allowfullscreen></iframe>
-  </div>
-</section>
+        <h1 class="hero-title">
+          Understand <span class="grad">CPU Scheduling</span><br/>
+          with Visual Simulation
+        </h1>
 
-<section>
-  <h2>Why Use This Tool?</h2>
-  <div class="grid">
-    <div class="card">✔ Ideal for OS students</div>
-    <div class="card">✔ Interactive learning</div>
-    <div class="card">✔ Compare multiple algorithms</div>
-    <div class="card">✔ Clean and modern interface</div>
-  </div>
-</section>
+        <p class="hero-sub">
+          Compare FCFS, SRTF, Round Robin and Priority Scheduling with animated Gantt charts,
+          detailed tables, and automatic best-algorithm selection.
+        </p>
 
-<section style="text-align:center;">
-  <h2>Start Exploring Now</h2>
-  <a href="/simulator" class="cta-btn">Start Simulation</a>
-</section>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/simulator">
+            <span class="btn-ico" aria-hidden="true">
+              <!-- play icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
+              </svg>
+            </span>
+            Launch Simulator
+          </a>
 
-<footer>
-  © 2026 CPU Scheduling Simulator • Built with Flask
-</footer>
+          <a class="btn btn-ghost" href="#demo">
+            <span class="btn-ico" aria-hidden="true">
+              <!-- video icon -->
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path d="M15 10l6-3v10l-6-3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2z"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Watch Demo
+          </a>
+        </div>
 
+        <div class="hero-mini">
+          <div class="mini-item">
+            <div class="mini-top">Real Backend</div>
+            <div class="mini-bottom">Flask + Algorithms</div>
+          </div>
+          <div class="mini-item">
+            <div class="mini-top">Animated</div>
+            <div class="mini-bottom">Gantt + Tables</div>
+          </div>
+          <div class="mini-item">
+            <div class="mini-top">Metrics</div>
+            <div class="mini-bottom">WT • TAT • RT</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO RIGHT: mockup image -->
+      <div class="hero-right">
+        <div class="mock-card">
+          <div class="mock-top">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="mock-title">CPU Scheduling Simulator</span>
+          </div>
+
+          <!-- You can replace this with a real screenshot later -->
+          <div class="mock-body">
+            <div class="mock-row">
+              <div class="mock-chip">FCFS</div>
+              <div class="mock-chip">SRTF</div>
+              <div class="mock-chip">RR</div>
+              <div class="mock-chip">Priority</div>
+            </div>
+
+            <div class="mock-gantt">
+              <div class="seg s1">P1</div>
+              <div class="seg s2">P2</div>
+              <div class="seg s3">P3</div>
+              <div class="seg s4">P4</div>
+            </div>
+
+            <div class="mock-grid">
+              <div class="mg">
+                <div class="mgl">Avg WT</div>
+                <div class="mgv">3.25</div>
+              </div>
+              <div class="mg">
+                <div class="mgl">Avg TAT</div>
+                <div class="mgv">7.50</div>
+              </div>
+              <div class="mg">
+                <div class="mgl">Best</div>
+                <div class="mgv gradtext">SRTF</div>
+              </div>
+              <div class="mg">
+                <div class="mgl">Quantum</div>
+                <div class="mgv">2</div>
+              </div>
+            </div>
+
+            <div class="mock-note">
+              Tip: Add processes → Run → Compare algorithms → View best selection.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Key Features</h2>
+        <p class="section-sub">Everything you need to learn scheduling faster and clearly.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="f-icon">
+            <!-- cpu icon -->
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <rect x="7" y="7" width="10" height="10" rx="2"
+                    fill="none" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Real Algorithms</h3>
+          <p>Backend logic implemented properly — not fake animation. Accurate Gantt + calculations.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="f-icon">
+            <!-- gantt icon -->
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 14h6M7 10h10M7 6h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Gantt Visualization</h3>
+          <p>See execution order instantly with readable blocks and time markers.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="f-icon">
+            <!-- chart icon -->
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 14l3-3 3 2 4-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Performance Metrics</h3>
+          <p>Compare Average Waiting Time, Turnaround Time, Response Time — clearly.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="f-icon">
+            <!-- trophy icon -->
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path d="M8 4h8v3a4 4 0 0 1-8 0V4z" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M6 7H4a3 3 0 0 0 3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 7h2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 11v3M9 21h6M10 14h4l1 4H9l1-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Best Algorithm</h3>
+          <p>Automatically selects the best approach based on calculated metrics.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <div class="section-head">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-sub">Simple workflow — designed for students.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-no">01</div>
+          <div class="step-body">
+            <h3>Add Processes</h3>
+            <p>Enter Arrival Time, Burst Time, Priority and choose a color for clear tracking.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-no">02</div>
+          <div class="step-body">
+            <h3>Run Scheduler</h3>
+            <p>Click run (and set quantum for RR). The backend runs all algorithms in one request.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-no">03</div>
+          <div class="step-body">
+            <h3>Compare & Learn</h3>
+            <p>Check Gantt charts + tables + metrics. See which algorithm performs best for your input.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO / VIDEO -->
+    <section id="demo" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Demo Video</h2>
+        <p class="section-sub">Add your own screen-recording video here later.</p>
+      </div>
+
+      <div class="video-wrap">
+        <!-- Replace src later with your actual video file -->
+        <!-- Option A: MP4 in static folder -->
+        <!-- <video controls playsinline preload="metadata" poster="/static/demo-poster.png">
+          <source src="/static/demo.mp4" type="video/mp4">
+        </video> -->
+
+        <!-- Option B: Placeholder -->
+        <div class="video-placeholder">
+          <div class="vp-top">
+            <span class="vp-pill">Demo Coming Soon</span>
+          </div>
+          <div class="vp-mid">
+            <div class="vp-play">
+              <svg viewBox="0 0 24 24" width="22" height="22">
+                <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="vp-text">
+              Record your screen using OBS / QuickTime<br/>
+              Save as <b>demo.mp4</b> inside <b>/static</b><br/>
+              Then uncomment the <b>&lt;video&gt;</b> code.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta">
+      <div class="cta-card">
+        <div>
+          <h2 class="cta-title">Ready to Explore?</h2>
+          <p class="cta-sub">Start simulation now and learn CPU scheduling with real results.</p>
+        </div>
+        <a class="btn btn-primary" href="/simulator">
+          Start Simulation
+          <span class="btn-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18">
+              <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© 2026 CPU Scheduler • Built with Flask</div>
+      <div class="footer-links">
+        <a href="/simulator">Simulator</a>
+        <a href="#features">Features</a>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function toggleMenu(){
+      const el = document.getElementById("mobileMenu");
+      el.classList.toggle("hidden");
+    }
+
+    // Service worker (optional)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
+    }
+  </script>
 </body>
 </html>
