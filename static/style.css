@@ -1,0 +1,2060 @@
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body{
+  background:#0b0f14;
+  color:#e5e7eb;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  margin:40px;
+}
+
+.card{
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding-top: 8px;
+}
+
+.row button{
+  margin-left: auto;
+}
+
+label{ color:#cbd5e1; }
+
+input{
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.10);
+  color:#e5e7eb;
+  padding:8px 10px;
+  border-radius:10px;
+  outline:none;
+}
+
+/* ============================== */
+/* QUANTUM (RR) PROFESSIONAL STYLE */
+/* ============================== */
+
+.row label{
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #94a3b8;
+}
+
+#quantum{
+  width: 70px;
+  text-align: center;
+  font-weight: 600;
+  background: #0b1220;
+  border: 1px solid rgba(96,165,250,0.25);
+  border-radius: 12px;
+  padding: 8px 10px;
+  transition: all 0.2s ease;
+}
+
+#quantum:focus{
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.15);
+}
+
+/* ================================= */
+/* PREMIUM DASHBOARD BUTTON (V2) */
+/* ================================= */
+
+button{
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #111827;
+  color: #e5e7eb;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.45); /* softer */
+  overflow: hidden;
+}
+
+/* Subtle hover */
+button:hover{
+  transform: translateY(-2px);
+  border-color: rgba(96,165,250,0.4);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.6);
+}
+
+/* Click press */
+button:active{
+  transform: scale(0.96);
+}
+
+/* ================================= */
+/* PRIMARY (Run Scheduler) */
+/* ================================= */
+
+button.primary{
+  background: linear-gradient(135deg,#1d4ed8,#2563eb);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.35); /* reduced glow */
+}
+
+button.primary:hover{
+  box-shadow: 0 6px 18px rgba(37,99,235,0.45);
+}
+
+/* ================================= */
+/* DANGER (Clear All) */
+/* ================================= */
+
+button.danger{
+  background: linear-gradient(135deg,#3f1d1d,#7f1d1d);
+  border: 1px solid rgba(220,38,38,0.35);
+  color: #f1f5f9;
+  box-shadow: 0 3px 8px rgba(127,29,29,0.25);
+}
+
+button.danger:hover{
+  background: linear-gradient(135deg,#5b1f1f,#991b1b);
+  box-shadow: 0 5px 14px rgba(153,27,27,0.35);
+}
+
+/* ================================= */
+/* SOFT LIGHT SWEEP ANIMATION */
+/* ================================= */
+
+button::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.6s;
+}
+
+button:hover::before{
+  left: 140%;
+}
+
+/* Modern clean table style */
+/* ---------- RESULT TABLE CONTAINER ---------- */
+
+.result-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: 20px;
+}
+
+/* ---------- HEADER ---------- */
+
+.result-table th {
+  text-align: left;
+  padding: 14px 18px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8fbaff;
+  background: linear-gradient(90deg, #0f1b2d, #16243a);
+  border: none;
+}
+
+/* rounded header corners */
+.result-table th:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.result-table th:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* ---------- ROWS ---------- */
+
+.result-table td {
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  border: none;
+  font-size: 14px;
+  color: #d7e6ff;
+}
+
+/* row rounded edges */
+.result-table tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.result-table tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* ---------- HOVER EFFECT ---------- */
+
+.result-table tr:hover td {
+  background: rgba(0, 150, 255, 0.08);
+  transition: 0.3s ease;
+  transform: translateY(-2px);
+}
+
+/* ---------- PID COLUMN STYLE ---------- */
+
+.result-table td:first-child {
+  font-weight: 600;
+  color: #8fffcb;
+}
+
+.muted{ color:#94a3b8; }
+
+.algo-bar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom: 12px;
+}
+
+.algo-btn{
+  padding:8px 12px;
+}
+
+.algo-active{
+  outline: 2px solid #60a5fa;
+}
+
+.algo-best{
+  border-color: rgba(0,255,136,0.55);
+}
+
+.gantt-wrap{ margin-top: 8px; }
+
+.gantt{
+  display:flex;
+  gap: 6px; /* 🔥 small spacing between blocks */
+  padding: 6px;
+
+  border-radius:14px;
+  background: rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.block{
+  position: relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  padding:12px 10px;
+  border-radius:10px;
+
+  font-weight:700;
+  font-size:14px;
+  color:#ffffff;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.8),
+    0 0 6px rgba(0,0,0,0.5); /* 🔥 text readable on any color */
+
+  transform-origin: left;
+}
+
+/* subtle glass shine */
+.block::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:10px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+  opacity:0.4;
+  pointer-events:none;
+}
+
+/* time text */
+.block small{
+  font-size:12px;
+  font-weight:600;
+  opacity:0.95;
+}
+
+/* hover */
+.block:hover{
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
+
+.block-label{ font-weight:800; }
+.block-time{ font-size: 12px; opacity: 0.9; }
+
+.details-layout {
+  margin-top: 0;
+}
+
+.gantt-section {
+  margin-bottom: 25px;
+}
+
+.bottom-layout {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  margin-top: 0;   /* ✅ reduced, balanced */
+}
+
+.table-section {
+  flex: 2;
+  margin-right: 10px;   /* small separation */
+}
+
+/* ============================= */
+/* PREMIUM STATS GRID (FINAL) */
+/* ============================= */
+/* ✅ STATS 6 BOX GRID (3 x 2) */
+
+.stats-section{
+  flex: 1;
+  display: grid;
+
+  /* 6 boxes => 3 columns x 2 rows */
+  grid-template-columns: repeat(3, minmax(160px, 1fr));
+
+  gap: 14px;
+  margin-top: 43px;          /* ✅ remove big top gap */
+  align-content: start;   /* ✅ keep boxes aligned nicely */
+}
+
+/* responsive */
+@media (max-width: 900px){
+  .stats-section{
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 520px){
+  .stats-section{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================= */
+/* ✅ PRO STAT BOX (NEW DESIGN)   */
+/* ============================= */
+
+.stat-box{
+  position: relative;
+  padding: 18px 18px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.03)
+  );
+
+  border: 1px solid rgba(148,163,184,0.14);
+  box-shadow:
+    0 12px 30px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(10px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+/* top glow line */
+.stat-box::before{
+  content:"";
+  position:absolute;
+  left: 14px;
+  right: 14px;
+  top: 10px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+  opacity: 0.55;
+}
+
+/* subtle right glow */
+.stat-box::after{
+  content:"";
+  position:absolute;
+  inset:-60px -80px auto auto;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(96,165,250,0.18), transparent 60%);
+  filter: blur(2px);
+  pointer-events:none;
+}
+
+/* hover lift */
+.stat-box:hover{
+  transform: translateY(-4px);
+  border-color: rgba(96,165,250,0.30);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.45),
+    0 0 0 1px rgba(96,165,250,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* label */
+.stat-box div:first-child{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(148,163,184,0.85);
+}
+
+/* value */
+.stat-box div:last-child{
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  color: #e5e7eb;
+
+  /* professional number glow */
+  text-shadow:
+    0 8px 22px rgba(96,165,250,0.10),
+    0 2px 8px rgba(0,0,0,0.55);
+}
+
+/* make RANK value look special (#1) */
+.stat-box .rank-value{
+  background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- Process Cards Grid ---------- */
+
+/* ---------- Compact Process List (Left Panel) ---------- */
+/* Compact multi-column layout */
+.process-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.process-card{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  transition: all 0.2s ease;
+  min-height: 64px;
+  cursor: pointer;
+}
+
+.process-card:hover{
+  background: rgba(255,255,255,0.07);
+  transform: translateY(-2px);
+}
+
+.color-box{
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.18);
+}
+
+/* ---------- Button Row ---------- */
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  justify-content: center; 
+  margin-bottom: 35px;
+}
+
+/* ---------- Modal ---------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+@media (max-width: 600px){
+  .modal-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================= */
+/* SPLIT MODAL (LEFT + RIGHT) */
+/* ============================= */
+
+.modal-content{
+  width: 900px;
+  max-width: 95vw;
+   height: auto;
+  max-height: 85vh;
+  padding: 0;
+  border-radius: 26px;
+  overflow: hidden;
+
+  display: flex;
+
+  background: rgba(15,23,42,0.95);
+  border: 1px solid rgba(148,163,184,0.15);
+
+  box-shadow:
+    0 50px 120px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(255,255,255,0.04);
+
+  animation: modalPop 0.35s ease;
+}
+
+/* LEFT SIDE */
+.modal-left{
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background:
+    radial-gradient(800px 500px at 0% 0%, rgba(99,102,241,0.35), transparent 60%),
+    linear-gradient(160deg,#1e293b,#0f172a);
+
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.modal-left h2{
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.modal-left p{
+  color: #94a3b8;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.modal-big-text{
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: rgba(255,255,255,0.85);
+}
+
+/* RIGHT SIDE */
+.modal-right{
+  flex: 1;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;     /* ✅ FIX cut */
+  padding-bottom: 30px; /* ✅ extra bottom space */
+}
+
+.modal-right h3{
+  font-size: 22px;      /* same as CPU Scheduler */
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 50px;  /* space before Arrival Time */
+}
+
+/* FORM GRID */
+.modal-grid{
+  display: flex;
+ flex-direction: column;
+  gap: 30px;
+}
+
+.modal-grid label{
+  display: block;
+  margin-bottom: 8px;   /* bigger space */
+}
+
+.modal-grid input{
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(2,6,23,0.6);
+  border: 1px solid rgba(148,163,184,0.15);
+}
+
+.modal-grid input:focus{
+  border-color: rgba(96,165,250,0.7);
+  box-shadow: 0 0 0 4px rgba(96,165,250,0.15);
+}
+
+/* ACTIONS */
+.modal-actions{
+  margin-top: 40px;
+  display: flex;
+  justify-content: flex-end;   /* 🔥 pushes buttons to right */
+  gap: 14px;
+}
+
+/* Responsive */
+@media (max-width: 800px){
+  .modal-content{
+    flex-direction: column;
+    height: auto;
+  }
+
+  .modal-left{
+    display: none;
+  }
+}
+
+/* Modal button row spacing */
+/* ============================= */
+/* MODAL PREMIUM BUTTONS */
+/* ============================= */
+
+.modal-actions button{
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease;
+}
+
+/* Submit Button (same vibe as Run button) */
+.modal-actions .primary{
+  background: linear-gradient(135deg,#2563eb,#1d4ed8);
+  border: none;
+  color: white;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+}
+
+.modal-actions .primary:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(37,99,235,0.45);
+}
+
+/* Cancel Button (soft dark glass style) */
+.modal-actions .cancel-btn{
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.modal-actions .cancel-btn:hover{
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-2px);
+}
+
+/* ===== Modal Validation ===== */
+.input-error{
+  border-color: rgba(239,68,68,0.85) !important;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.18) !important;
+}
+
+.modal-error{
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #fecaca;
+  font-size: 13px;
+  line-height: 1.4;
+  max-height: 120px;     /* ✅ if too many messages */
+  overflow-y: auto;   
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---------- 2 Column Layout for Process Area ---------- */
+.process-layout{
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.left-panel{
+  flex: 1.3;
+  max-width: 520px;
+
+}
+/* Center heading inside left panel */
+.left-panel h3{
+  text-align: center;
+  position: relative;
+}
+
+/* Make underline centered and shorter */
+.left-panel h3::after{
+
+   content: "";
+  display: block;
+  width: 180px;              /* underline length */
+  height: 2px;
+  margin: 8px auto 0;        /* center underline */
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa
+  );
+  border-radius: 2px; 
+}
+
+.right-panel{
+  flex: 0.9;
+  padding-left: 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;   /* 👈 align heading + table */
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 980px){
+  .process-layout{
+    flex-direction: column;
+  }
+  .left-panel, .right-panel{
+    min-width: auto;
+  }
+}
+
+#processTable{
+  width: 520px;
+  margin-left: auto;
+  margin-top: 12px;
+
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+/* Center Process Table heading */
+.right-panel h3{
+  width: 520px;        /* EXACT same as table */
+  text-align: center;  /* center text inside table width */
+  align-self: flex-end; /* move heading block to right */
+}
+
+/* Custom underline like left side */
+.right-panel h3::after{
+  content: "";
+  display: block;
+  width: 220px;         /* slightly longer */
+  height: 2px;
+  margin: 8px auto 0;
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa
+  );
+  border-radius: 2px;
+}
+
+/* Same divider for ALL columns (except last) */
+/* ============================= */
+/* UNIFORM COLUMN DIVIDER (TH + TD) */
+/* ============================= */
+
+#processTable tr{
+  transition: all 0.2s ease;
+}
+
+#processTable tr:hover td{
+  background: rgba(255,255,255,0.06);
+}
+
+*{
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.pid-badge {
+  padding: 8px 16px;
+  border-radius: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;              /* EXACT like gantt */
+  font-size: 14px;               /* EXACT like gantt */
+  letter-spacing: 0.5px;
+
+  color: #ffffff;
+  transform: translateZ(0); 
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.8),
+    0 0 6px rgba(0,0,0,0.5);      /* EXACT same shadow */
+}
+
+.process-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:3px;            /* tighter spacing */
+}
+
+/* Process title */
+.process-name{
+  font-size:14px;     /* smaller */
+  font-weight:600;
+  color:#e2e8f0;
+  margin-bottom:2px;
+}
+
+/* Details text */
+.process-detail{
+  font-size:12px;     /* smaller */
+  color:#94a3b8;
+  line-height:1.2;
+}
+
+
+/* Headin animated*/
+
+/* ---------- MAIN TITLE ---------- */
+
+.main-title{
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa,
+    #22d3ee
+  );
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  animation: glowFade 3s ease-in-out infinite alternate;
+}
+
+/* Subtle glow animation */
+@keyframes glowFade{
+  from{
+    text-shadow: 0 0 8px rgba(96,165,250,0.4);
+  }
+  to{
+    text-shadow: 0 0 18px rgba(167,139,250,0.7);
+  }
+}
+
+
+/* ---------- SECTION HEADINGS ---------- */
+
+.card h3{
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  position: relative;
+
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Divider line under heading */
+.card h3::after{
+  content: "";
+  display: block;
+  height: 2px;
+  margin-top: 8px;
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa
+  );
+  border-radius: 2px;
+}
+
+/* ============================== */
+/* RESULTS & SECTION HEADINGS */
+/* ============================== */
+
+h2{
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin-top: 50px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+
+  background: linear-gradient(
+    90deg,
+    #60a5fa,
+    #a78bfa,
+    #22d3ee
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  animation: glowFade 3s ease-in-out infinite alternate;
+}
+
+button{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon{
+  display: flex;
+  align-items: center;
+}
+
+
+/* ================================ */
+/* ADD PROCESS BUTTON (INDIGO) */
+/* ================================ */
+
+button.add-btn{
+  background: linear-gradient(135deg,#1f2937,#374151);
+  border: 1px solid rgba(148,163,184,0.25);
+  color: #e5e7eb;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+button.add-btn:hover{
+  background: linear-gradient(135deg,#273548,#3f4f65);
+  border-color: rgba(148,163,184,0.45);
+}
+
+
+/* ================================ */
+/* RUN SCHEDULER BUTTON (EMERALD) */
+/* ================================ */
+
+button.run-btn{
+  background: linear-gradient(135deg,#0f172a,#1e3a8a);
+  border: 1px solid rgba(96,165,250,0.35);
+  color: #e5e7eb;
+  box-shadow: 0 3px 10px rgba(30,58,138,0.30);
+}
+
+button.run-btn:hover{
+  background: linear-gradient(135deg,#162033,#2746a0);
+  box-shadow: 0 6px 16px rgba(30,58,138,0.40);
+}
+
+/* ============================== */
+/* RUN BUTTON SUBTLE PULSE */
+/* ============================== */
+
+@keyframes subtlePulse {
+  0% {
+    box-shadow: 0 3px 10px rgba(30,58,138,0.30);
+  }
+  50% {
+    box-shadow: 0 3px 18px rgba(30,58,138,0.45);
+  }
+  100% {
+    box-shadow: 0 3px 10px rgba(30,58,138,0.30);
+  }
+}
+
+.run-pulse {
+  animation: subtlePulse 3s ease-in-out infinite;
+}
+
+/* ============================== */
+/* RUN BUTTON DISABLED STYLE */
+/* ============================== */
+
+button.run-btn:disabled {
+  background: #1e293b;
+  border: 1px solid rgba(148,163,184,0.15);
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+  animation: none;
+  opacity: 0.6;
+}
+
+/* Smooth enable/disable transition for Run button */
+#runBtn{
+  transition: 
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    filter 0.25s ease;
+}
+
+/* Disabled look (already you have, keep yours, but add smooth feel) */
+#runBtn:disabled{
+  opacity: 0.55;
+  transform: translateY(0);     /* prevent jump */
+  filter: saturate(0.8);
+}
+/* ============================== */
+/* RUN BUTTON LEFT → RIGHT ENABLE */
+/* ============================== */
+
+#runBtn{
+  position: relative;
+  overflow: hidden;
+}
+
+/* overlay for enable animation */
+#runBtn::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  left: -110%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(96,165,250,0.18),
+    rgba(96,165,250,0.38),
+    rgba(96,165,250,0.18),
+    transparent
+  );
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* play only when enabling */
+.run-enable-slide::after{
+  opacity: 1;
+  animation: runEnableSlide 3s ease forwards; /* ✅ 3 seconds */
+}
+
+@keyframes runEnableSlide{
+  from { left: -110%; }
+  to   { left: 110%; }
+}/* Enable “pop” animation when it becomes active */
+
+#resultsSection{
+  scroll-margin-top: 50px;  /* ✅ heading won’t hide */
+}
+
+/* ✅ ADD THIS AT THE VERY BOTTOM OF YOUR CSS (last lines) */
+/* (This will override old styles without breaking your page) */
+
+
+
+/* ============================== */
+/* RESULTS SUMMARY: LEFT TABLE + RIGHT BEST TEXT */
+/* ============================== */
+.summary-layout{
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+.summary-left{
+  flex: 1.2;
+  min-width: 520px;
+}
+
+.summary-right{
+  flex: 1;
+  min-width: 320px;
+  margin-top: 25px;
+}
+
+@media (max-width: 980px){
+  .summary-layout{
+    flex-direction: column;
+  }
+  .summary-left, .summary-right{
+    min-width: 100%;
+  }
+}
+
+
+/* ============================== */
+/* SUMMARY TABLE: SAME LOOK AS PROCESS TABLE */
+/* ============================== */
+#summaryTable .summary-table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+#summaryTable .summary-table th{
+  position: sticky;
+  top: 0;
+  background: linear-gradient(to right, #0f172a, #111827);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+  z-index: 1;
+}
+
+#summaryTable .summary-table td{
+  padding: 10px 14px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+#summaryTable .summary-table tr{
+  transition: all 0.2s ease;
+}
+
+#summaryTable .summary-table tr:hover{
+  background: rgba(255,255,255,0.06);
+  transform: scale(1.01);
+}
+/* ============================== */
+/* DETAILS RESULT TABLE: MAKE IT SAME AS PROCESS TABLE */
+/* (This affects the table inside the details section) */
+/* ============================== */
+#details .result-table{
+  width: 520px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+#details .result-table th{
+  position: sticky;
+  top: 0;
+  background: linear-gradient(to right, #0f172a, #111827);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cbd5e1;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+#details .result-table td{
+  padding: 10px 14px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+#details .result-table tr{
+  transition: all 0.2s ease;
+}
+
+#details .result-table tr:hover{
+  background: rgba(255,255,255,0.06);
+  transform: scale(1.01);
+}
+
+
+/* ------------------*/
+
+/* professional best row marker: left border + subtle glow */
+#summaryTable .best-row{
+  position: relative;
+}
+
+/* ============================== */
+/* BEST ROW HIGHLIGHT (PRO BLUE/VIOLET) */
+/* ============================== */
+
+#summaryTable .best-row td{
+  background: linear-gradient(
+    90deg,
+    rgba(96,165,250,0.14),
+    rgba(167,139,250,0.08)
+  ) !important;
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+#summaryTable .best-row td:first-child{
+  border-left: 4px solid rgba(96,165,250,0.95);
+  box-shadow: -10px 0 25px rgba(96,165,250,0.25);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#summaryTable .best-row{
+  outline: 1px solid rgba(96,165,250,0.18);
+  border-radius: 12px;
+}
+
+/* BEST badge */
+.best-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  background: rgba(34,197,94,0.14);
+  border: 1px solid rgba(34,197,94,0.35);
+  color: rgba(134,239,172,1);
+}
+
+/* small star icon feel */
+.best-badge::before{
+  content: "★";
+  font-size: 12px;
+  line-height: 1;
+}
+
+/* ============================== */
+/* PREMIUM BEST ALGORITHM CARD */
+/* ============================== */
+
+.best-card{
+  padding: 20px 22px;
+  border-radius: 16px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(96,165,250,0.12),
+    rgba(167,139,250,0.08)
+  );
+
+  border: 1px solid rgba(96,165,250,0.25);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Small label */
+.best-label{
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+/* Big algorithm name */
+.best-name{
+  font-size: 22px;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+/* Optional metric highlight */
+.best-metric{
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.best-metric span{
+  font-weight: 700;
+  color: #60a5fa;
+}
+
+/* ============================== */
+/* BEST TEXT RIGHT SIDE - PRO CARD */
+/* ============================== */
+
+#summaryTable .best-text{
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.best-card{
+  padding: 18px 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg,
+    rgba(96,165,250,0.12),
+    rgba(167,139,250,0.08)
+  );
+  border: 1px solid rgba(96,165,250,0.25);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+
+.best-card-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.best-chip{
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(34,197,94,0.14);
+  border: 1px solid rgba(34,197,94,0.35);
+  color: rgba(134,239,172,1);
+}
+
+.best-sub{
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.best-title{
+  font-size: 20px;
+  font-weight: 800;
+  color: #e5e7eb;
+  margin-top: 6px;
+}
+
+.best-code{
+  font-size: 13px;
+  margin-top: 4px;
+  color: #cbd5e1;
+  opacity: 0.9;
+}
+
+.best-metrics{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.best-metric{
+  background: rgba(2,6,23,0.35);
+  border: 1px solid rgba(148,163,184,0.12);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.best-metric-label{
+  font-size: 12px;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.best-metric-value{
+  margin-top: 6px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #60a5fa;
+}
+
+.best-list{
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.best-item{
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(2,6,23,0.30);
+  border: 1px solid rgba(148,163,184,0.12);
+}
+
+.best-dot{
+  width: 10px;
+  height: 10px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: #60a5fa;
+  box-shadow: 0 0 0 4px rgba(96,165,250,0.18);
+}
+
+.best-item-name{
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+.best-item-code{
+  margin-top: 2px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.best-item-multi{
+  justify-content: space-between;
+  align-items: center;
+}
+
+.best-item-left{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.best-item-metrics{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.mini-metric{
+  min-width: 90px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(15,23,42,0.55);
+  border: 1px solid rgba(148,163,184,0.10);
+  text-align:center;
+}
+
+.mini-label{
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color:#94a3b8;
+}
+
+.mini-value{
+  margin-top: 2px;
+  font-size: 16px;
+  font-weight: 800;
+  color:#60a5fa;
+}
+
+/* ===========================
+   SEQUENCE ANIMATION STYLES
+   =========================== */
+
+/* Heading typewriter (letters) */
+.typewriter span{
+  display:inline-block;
+  opacity:0;
+  transform: translateY(8px);
+  animation: letterIn 0.28s ease forwards;
+}
+
+@keyframes letterIn{
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* Table row reveal */
+.row-reveal{
+  animation: rowIn 0.85s ease forwards;
+}
+
+@keyframes rowIn{
+  from{ opacity:0; transform: translateY(10px); }
+  to  { opacity:1; transform: translateY(0); }
+}
+
+/* Best highlight pulse */
+.best-pulse td{
+  animation: bestPulse 1.5s ease-in-out 1;
+}
+
+@keyframes bestPulse{
+  0%   { filter: brightness(1); }
+  50%  { filter: brightness(1.25); }
+  100% { filter: brightness(1); }
+}
+
+/* Right-side card reveal */
+.card-reveal{
+  opacity:0;
+  transform: translateY(14px);
+  animation: cardIn 0.95s ease forwards;
+}
+
+@keyframes cardIn{
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* ✅ make letter-by-letter heading visible (gradient per letter) */
+#resultsHeading.typewriter span{
+  background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ✅ hide summary rows BEFORE animation starts */
+#summaryTable.summary-animating .summary-table tr{
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+/* ✅ During first table reveal, disable best highlight and badge */
+#summaryTable.prebest .best-row td{
+  background: rgba(255,255,255,0.04) !important;
+  color: #e5e7eb !important;
+  font-weight: 400 !important;
+}
+
+#summaryTable.prebest .best-row td:first-child{
+  border-left: none !important;
+  box-shadow: none !important;
+}
+
+#summaryTable.prebest .best-badge{
+  display: none !important;
+}
+/* ✅ Allow highlight ONLY for rows that are unlocked one-by-one */
+#summaryTable.prebest .best-row.best-show td{
+  background: linear-gradient(
+    90deg,
+    rgba(96,165,250,0.14),
+    rgba(167,139,250,0.08)
+  ) !important;
+  color: #e5e7eb;
+  font-weight: 700 !important;
+}
+
+#summaryTable.prebest .best-row.best-show td:first-child{
+  border-left: 4px solid rgba(96,165,250,0.95) !important;
+  box-shadow: -10px 0 25px rgba(96,165,250,0.25) !important;
+}
+
+#summaryTable.prebest .best-row.best-show .best-badge{
+  display:inline-flex !important;
+}
+
+/* ===========================
+   BEST CARD ENTER ANIMATION (Premium)
+   =========================== */
+
+/* initial state (hidden) */
+#bestText .best-enter{
+  opacity: 0;
+  transform: translateY(18px) scale(0.98);
+  filter: blur(2px);
+}
+
+/* when we trigger */
+#bestText .best-enter.best-show{
+  animation: bestCardIn 0.95s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes bestCardIn{
+  to{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ---- Animate inner parts one by one ---- */
+#bestText .best-enter.best-show .best-card-top{
+  opacity: 0;
+  transform: translateY(10px);
+  animation: innerIn 0.55s ease forwards;
+  animation-delay: 0.15s;
+}
+
+#bestText .best-enter.best-show .best-title{
+  opacity: 0;
+  transform: translateY(10px);
+  animation: innerIn 0.55s ease forwards;
+  animation-delay: 0.28s;
+}
+
+#bestText .best-enter.best-show .best-code{
+  opacity: 0;
+  transform: translateY(10px);
+  animation: innerIn 0.55s ease forwards;
+  animation-delay: 0.40s;
+}
+
+#bestText .best-enter.best-show .best-metrics,
+#bestText .best-enter.best-show .best-list{
+  opacity: 0;
+  transform: translateY(10px);
+  animation: innerIn 0.55s ease forwards;
+  animation-delay: 0.55s;
+}
+
+@keyframes innerIn{
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* prevent sudden layout jump when best card appears */
+#bestText{
+  min-height: 220px;   /* adjust if your card is taller */
+}
+
+/* ✅ FIX Algorithms heading animation visibility */
+#algorithmsHeading.typewriter span{
+  background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+#resultsSection{
+  position: relative;
+  z-index: 1;
+}
+
+.view-algo-link {
+  margin-top: 18px;
+  font-weight: 600;
+  color: #9ca3ff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s ease;
+}
+
+.view-algo-link .arrow {
+  transition: transform 0.25s ease;
+}
+
+.view-algo-link:hover {
+  color: #c4b5fd;
+}
+
+.view-algo-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+.algo-hidden {
+  display: none;
+}
+
+#algoButtons, #details {
+  will-change: opacity;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+#algoButtons{
+  display: flex;
+  justify-content: center;   /* 🔥 center */
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+/* ===========================
+   Algorithm Button Stagger Animation
+   =========================== */
+
+.algo-btn{
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+}
+
+/* when activated */
+.algo-btn.btn-show{
+  animation: algoBtnIn 0.45s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+@keyframes algoBtnIn{
+  to{
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================= */
+/* PREMIUM GANTT HEADER */
+/* ============================= */
+
+.gantt-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.gantt-title{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  background: linear-gradient(90deg,#60a5fa,#a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gantt-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(90deg,#60a5fa,#a78bfa);
+  box-shadow: 0 0 8px rgba(96,165,250,0.6);
+}
+
+/* ===========================
+   GANTT FILL ANIMATION
+   =========================== */
+
+@keyframes ganttFill{
+  from{
+    transform: scaleX(0);
+    opacity:0;
+  }
+  to{
+    transform: scaleX(1);
+    opacity:1;
+  }
+}
+
+.block.gantt-animate{
+  animation: ganttFill 600ms cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* ===========================
+   SEQUENCE ANIMATION CONTROL
+   =========================== */
+
+/* Hidden state */
+.table-hidden,
+.stats-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Table appear */
+.table-show {
+  animation: tableIn 0.6s ease forwards;
+}
+
+@keyframes tableIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stats appear */
+.stats-show {
+  animation: statsIn 0.6s ease forwards;
+}
+
+@keyframes statsIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================= */
+/* GANTT HORIZONTAL SCROLL FIX   */
+/* ============================= */
+
+.gantt-wrap{
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 10px;      /* space for scrollbar */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+}
+
+/* keep gantt in one line and allow it to be wider than container */
+.gantt{
+  flex-wrap: nowrap;
+  width: max-content;         /* key: makes it expand */
+  min-width: 100%;            /* but still full if small */
+}
+
+/* each block should not shrink when many blocks */
+.block{
+  flex: 0 0 auto;
+  min-width: 56px;            /* adjust: 50-70 looks good */
+}
+
+/* ============================= */
+/* PROFESSIONAL DELETE ICON */
+/* ============================= */
+
+.action-cell{
+  text-align: center;
+}
+
+.icon-btn{
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,0.25);
+  background: rgba(239,68,68,0.08);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0;
+  box-shadow: none;   /* so it won't look like normal big button */
+}
+
+.trash-icon{
+  width: 18px;
+  height: 18px;
+  stroke: #f87171;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.25s ease;
+}
+
+.icon-btn:hover{
+  background: rgba(239,68,68,0.18);
+  border-color: rgba(239,68,68,0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(239,68,68,0.25);
+}
+
+.icon-btn:hover .trash-icon{
+  stroke: #ef4444;
+}
+
+.icon-btn:active{
+  transform: scale(0.92);
+}
+
+#processTable th{
+  background: linear-gradient(to right, #0f172a, #111827);
+  padding: 10px 14px;
+  text-align: center;
+
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #cbd5e1;
+}
+/* row cells same background */
+#processTable td{
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.04);
+  text-align: center;
+}
+
+/* rounded row corners */
+#processTable tr td:first-child{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#processTable tr td:last-child{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.best-reason-block {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reason-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.reason-rank {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,#00d4ff,#4f46e5);
+  color: white;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.multi-title-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 10px 0 18px 0;
+}
+
+.algo-name {
+  padding: 6px 14px;
+  border-radius: 8px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(70, 110, 255, 0.15),
+    rgba(70, 110, 255, 0.05)
+  );
+
+  border: 1px solid rgba(70, 110, 255, 0.35);
+
+  font-weight: 600;
+  font-size: 14px;
+
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(6px);
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 10px;
+  margin-left: 10px;
+
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+
+  border-radius: 999px;
+
+  background: rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+
+  transition: all 350ms ease;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.rank-hidden {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.rank-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =============================
+   PROFESSIONAL COLOR PREVIEW
+============================= */
+
+.color-picker-wrap{
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+}
+
+.color-preview{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  position: relative;
+
+  background: #3b82f6;
+  border: 2px solid rgba(255,255,255,0.15);
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.08);
+}
+
+.color-preview:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,255,255,0.12);
+}
+
+.color-preview:active{
+  transform: scale(0.95);
+}
+
+/* ✅ REAL color input sits on top (clickable), but invisible */
+#processModal #mColor{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
