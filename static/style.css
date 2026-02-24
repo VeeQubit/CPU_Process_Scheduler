@@ -2146,18 +2146,30 @@ button.run-btn:disabled {
   z-index: 1;
   width: min(1120px, 92vw);
   margin: 0 auto;
-  padding: 90px 0 40px;
+  padding: 120px 0 40px;
 }
 
 /* NAV */
 .nav{
-  position: sticky;
+  position: fixed;          /* ✅ change sticky → fixed */
   top: 0;
-  z-index: 10;
-  backdrop-filter: blur(10px);
-  background: rgba(7,11,18,0.65);
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+
+  backdrop-filter: blur(14px);
+  background: rgba(7,11,18,0.75);
   border-bottom: 1px solid rgba(255,255,255,0.06);
+
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* When scrolling */
+.nav.scrolled{
+  background: rgba(7,11,18,0.95);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+}
+
 .nav-inner{
   width: min(1120px, 92vw);
   margin: 0 auto;
@@ -2415,6 +2427,7 @@ button.run-btn:disabled {
 
 /* sections */
 .section{
+  scroll-margin-top: 100px;
   padding: 34px 0; /* ✅ no huge gaps */
 }
 .section-head{

@@ -12,6 +12,11 @@
   <link rel="manifest" href="/static/manifest.json">
   <meta name="theme-color" content="#0b0f14">
   <meta name="description" content="Visualize and compare CPU scheduling algorithms with animated Gantt charts and performance metrics.">
+  <style>
+  html{
+    scroll-behavior: smooth;
+  }
+</style>
 </head>
 
 <body class="home-body">
@@ -307,15 +312,25 @@
   </main>
 
   <script>
-    function toggleMenu(){
-      const el = document.getElementById("mobileMenu");
-      el.classList.toggle("hidden");
-    }
+  function toggleMenu(){
+    const el = document.getElementById("mobileMenu");
+    el.classList.toggle("hidden");
+  }
 
-    // Service worker (optional)
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
+  // ✅ Premium fixed navbar scroll effect
+  window.addEventListener("scroll", function(){
+    const nav = document.querySelector(".nav");
+    if(window.scrollY > 20){
+      nav.classList.add("scrolled");
+    } else {
+      nav.classList.remove("scrolled");
     }
-  </script>
+  });
+
+  // Service worker (optional)
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
+  }
+</script>
 </body>
 </html>
