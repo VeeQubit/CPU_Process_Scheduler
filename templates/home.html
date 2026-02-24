@@ -2,53 +2,221 @@
 <html>
 <head>
   <title>CPU Scheduling Simulator</title>
-  <link rel="stylesheet" href="/static/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #111827, #0b0f14);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #cbd5e1;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 14px 32px;
+      border-radius: 40px;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(124,58,237,0.4);
+    }
+
+    section {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      gap: 30px;
+    }
+
+    .card-box {
+      background: rgba(255,255,255,0.05);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+
+    .card-box:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .feature-icon {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      display: block;
+      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .card-box h3 {
+      margin-top: 10px;
+      color: #ffffff;
+    }
+
+    .about p {
+      text-align: center;
+      max-width: 800px;
+      margin: auto;
+      color: #cbd5e1;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.4rem;
+      }
+    }
+
+  </style>
 </head>
-<body class="landing">
+
+<body>
 
 <section class="hero">
   <h1>CPU Scheduling Simulator</h1>
-  <p>Visualize and compare FCFS, SRTF, Round Robin and Priority scheduling algorithms in real time.</p>
+  <p>
+    Visualize and compare FCFS, SRTF, Round Robin and Priority scheduling
+    algorithms with animated Gantt charts and performance analysis.
+  </p>
   <a href="/simulator" class="cta-btn">Launch Simulator</a>
 </section>
 
-<section class="features">
+<section>
   <h2>Features</h2>
-  <div class="feature-grid">
-    <div>⚡ Real Algorithm Implementation</div>
-    <div>📊 Animated Gantt Charts</div>
-    <div>📈 Performance Metrics Comparison</div>
-    <div>🎯 Best Algorithm Detection</div>
+  <div class="grid">
+
+    <div class="card-box">
+      <i class="fa-solid fa-microchip feature-icon"></i>
+      <h3>Real Algorithms</h3>
+      <p>Accurate backend implementation of scheduling logic.</p>
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-chart-gantt feature-icon"></i>
+      <h3>Gantt Visualization</h3>
+      <p>Interactive execution timeline representation.</p>
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-chart-line feature-icon"></i>
+      <h3>Performance Metrics</h3>
+      <p>Compare waiting time, turnaround time and response time.</p>
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-trophy feature-icon"></i>
+      <h3>Best Algorithm Detection</h3>
+      <p>Automatically identifies the optimal scheduling strategy.</p>
+    </div>
+
   </div>
 </section>
 
 <section class="about">
   <h2>About The Project</h2>
   <p>
-    This CPU Scheduling Simulator is built using Flask and JavaScript.
-    It helps students understand operating system scheduling concepts
-    through interactive visualization and performance analysis.
+    This simulator is built using Flask and modern web technologies.
+    It is designed to help Operating System students understand scheduling
+    algorithms through interactive experimentation and performance comparison.
   </p>
 </section>
 
-<section class="algorithms">
+<section>
   <h2>Supported Algorithms</h2>
-  <ul>
-    <li>First Come First Serve (FCFS)</li>
-    <li>Shortest Remaining Time First (SRTF)</li>
-    <li>Round Robin (RR)</li>
-    <li>Priority Scheduling (Preemptive & Non-preemptive)</li>
-  </ul>
+  <div class="grid">
+
+    <div class="card-box">
+      <i class="fa-solid fa-clock feature-icon"></i>
+      FCFS (First Come First Serve)
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-bolt feature-icon"></i>
+      SRTF (Shortest Remaining Time First)
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-rotate feature-icon"></i>
+      Round Robin (RR)
+    </div>
+
+    <div class="card-box">
+      <i class="fa-solid fa-layer-group feature-icon"></i>
+      Priority Scheduling
+    </div>
+
+  </div>
 </section>
 
-<section class="cta-section">
-  <h2>Ready to Explore Scheduling?</h2>
+<section style="text-align:center;">
+  <h2>Ready to Explore?</h2>
   <a href="/simulator" class="cta-btn">Start Simulation</a>
 </section>
 
 <footer>
-  <p>© 2026 CPU Scheduling Simulator</p>
+  © 2026 CPU Scheduling Simulator • Built with Flask
 </footer>
 
 </body>
