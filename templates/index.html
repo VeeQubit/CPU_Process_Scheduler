@@ -3,6 +3,9 @@
 <head>
   <title>CPU Scheduling Simulator</title>
   <link rel="stylesheet" href="/static/style.css">
+   <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#0b0f14">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -161,5 +164,11 @@
   
 
   <script src="/static/script.js"></script>
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/static/service-worker.js")
+    .then(() => console.log("Service Worker Registered"));
+}
+</script>
 </body>
 </html>
