@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from algorithms import *
+from flask import send_from_directory
 
 app = Flask(__name__)
 
@@ -10,6 +11,14 @@ def home():
 @app.route("/simulator")
 def simulator():
     return render_template("index.html")
+
+@app.route("/sitemap.xml")
+def sitemap():
+    return send_from_directory(".", "sitemap.xml")
+
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory(".", "robots.txt")
 
 @app.route("/run", methods=["POST"])
 def run():

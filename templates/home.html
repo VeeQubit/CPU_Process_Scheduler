@@ -3,20 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CPU Scheduler • Home</title>
 
-  <!-- Your existing CSS -->
-  <link rel="stylesheet" href="/static/style.css">
+  <!-- 🔥 PRIMARY SEO -->
+  <title>CPU Scheduling Simulator – Visualize FCFS, SRTF, Round Robin & Priority Algorithms</title>
 
-  <!-- PWA + SEO (optional but recommended) -->
+  <meta name="description"
+        content="Interactive CPU Scheduling Simulator to visualize FCFS, SRTF, Round Robin and Priority scheduling algorithms with animated Gantt charts and performance comparison. Built using Flask." />
+
+  <meta name="keywords"
+        content="CPU Scheduling Simulator, FCFS, SRTF, Round Robin, Priority Scheduling, Operating Systems Lab Tool, Gantt Chart Visualization" />
+
+  <meta name="author" content="CPU Scheduling Simulator" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- 🔥 Canonical -->
+  <link rel="canonical" href="https://cpu-scheduler.up.railway.app/" />
+
+  <!-- 🔥 Open Graph (Facebook / LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="CPU Scheduling Simulator – Interactive OS Learning Tool" />
+  <meta property="og:description"
+        content="Compare FCFS, SRTF, Round Robin and Priority scheduling algorithms with animated Gantt charts and automatic best-algorithm detection." />
+  <meta property="og:url" content="https://cpu-scheduler.up.railway.app/" />
+  <meta property="og:image" content="https://cpu-scheduler.up.railway.app/static/preview.png" />
+
+  <!-- 🔥 Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CPU Scheduling Simulator" />
+  <meta name="twitter:description"
+        content="Visualize CPU scheduling algorithms with real-time Gantt chart simulation." />
+  <meta name="twitter:image"
+        content="https://cpu-scheduler.up.railway.app/static/preview.png" />
+
+  <!-- 🔥 PWA -->
   <link rel="manifest" href="/static/manifest.json">
   <meta name="theme-color" content="#0b0f14">
-  <meta name="description" content="Visualize and compare CPU scheduling algorithms with animated Gantt charts and performance metrics.">
+
+  <!-- 🔥 Favicon (create this file in /static) -->
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/static/style.css">
+
+  <!-- Smooth Scroll -->
   <style>
-  html{
-    scroll-behavior: smooth;
-  }
-</style>
+    html { scroll-behavior: smooth; }
+  </style>
 </head>
 
 <body class="home-body">
@@ -331,6 +363,21 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
   }
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CPU Scheduling Simulator",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web",
+  "description": "Interactive CPU Scheduling Simulator to visualize FCFS, SRTF, Round Robin and Priority scheduling algorithms.",
+  "url": "https://cpu-scheduler.up.railway.app/",
+  "creator": {
+    "@type": "Organization",
+    "name": "CPU Scheduling Simulator"
+  }
+}
 </script>
 </body>
 </html>
