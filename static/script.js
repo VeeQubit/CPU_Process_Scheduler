@@ -11,7 +11,7 @@ const fullNames = {
 let editingIndex = null;
 let globalResults = {};
 let bestAlgos = [];
-let modalErrorShown = false;   // ✅ show errors only after Submit clicked
+let modalErrorShown = false;   // only after Submit clicked
 let algorithmsStarted = false; // ✅ prevent double animation
 
 // ---------- PROCESS STORAGE ----------
