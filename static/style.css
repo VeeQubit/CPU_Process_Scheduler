@@ -2561,3 +2561,30 @@ button.run-btn:disabled {
   .hero-mini{ grid-template-columns: 1fr; }
   .cta-card{ flex-direction: column; align-items: flex-start; }
 }
+
+.video-placeholder-clean{
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(148,163,184,0.15);
+}
+
+.vp-play-icon{
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg,#7c3aed,#06b6d4);
+  color: white;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+}
+
+.vp-clean-text{
+  font-size: 16px;
+  color: #cbd5e1;
+  font-weight: 600;
+}
