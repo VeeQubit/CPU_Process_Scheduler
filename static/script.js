@@ -698,9 +698,9 @@ ranked.forEach((item, index) => {
   <div class="gantt" id="ganttChart"></div>
 </div>
 
-    <div class="bottom-layout">
+    <div class="result-layout">
 
-      <div id="tableSection" class="table-hidden">
+      <div id="tableSection" class="result-left table-hidden">
     <table class="result-table">
         <tr>
           <th>PID</th>
@@ -727,7 +727,7 @@ ranked.forEach((item, index) => {
       </table>
 </div>
 
-<div id="statsSection" class="stats-section stats-hidden">
+<div id="statsSection" class="result-right stats-section stats-hidden">
 
   <div class="stat-box">
   <div>Rank</div>

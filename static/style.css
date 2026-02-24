@@ -324,18 +324,6 @@ button:hover::before{
   margin-bottom: 25px;
 }
 
-.bottom-layout {
-  display: flex;
-  gap: 50px;
-  align-items: flex-start;
-  margin-top: 0;   /* ✅ reduced, balanced */
-}
-
-.table-section {
-  flex: 2;
-  margin-right: 10px;   /* small separation */
-}
-
 /* ============================= */
 /* PREMIUM STATS GRID (FINAL) */
 /* ============================= */
@@ -2057,4 +2045,44 @@ button.run-btn:disabled {
   cursor: pointer;
   border: none;
   padding: 0;
+}
+
+/* ============================== */
+/* RESULT SECTION (LIKE SUMMARY) */
+/* ============================== */
+
+.result-layout{
+  display: flex;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+.result-left{
+  flex: 1.2;
+  min-width: 520px;
+}
+
+.result-right{
+  flex: 1;
+  min-width: 320px;
+  margin-top: 25px;
+}
+
+@media (max-width: 980px){
+  .result-layout{
+    flex-direction: column;
+  }
+  .result-left,
+  .result-right{
+    min-width: 100%;
+  }
+}
+
+#processModal #mColor{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }
