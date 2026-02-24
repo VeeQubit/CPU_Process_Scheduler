@@ -4,116 +4,135 @@
   <title>CPU Scheduling Simulator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Font Awesome Icons -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at top, #111827, #0b0f14);
+      background: linear-gradient(135deg, #0f172a, #0b1220);
       color: white;
-      overflow-x: hidden;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px 8%;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: rgba(15,23,42,0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    nav h2 {
+      background: linear-gradient(90deg,#7c3aed,#06b6d4);
+      background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
+    }
+
+    nav a {
+      color: #cbd5e1;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 0.9rem;
     }
 
     .hero {
-      text-align: center;
-      padding: 120px 20px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 100px 8%;
+      gap: 40px;
+    }
+
+    .hero-text {
+      max-width: 600px;
     }
 
     .hero h1 {
-      font-size: 3.5rem;
-      background: linear-gradient(90deg, #7c3aed, #06b6d4);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      font-size: 3rem;
       margin-bottom: 20px;
+      background: linear-gradient(90deg,#7c3aed,#06b6d4);
+      background-clip: text;
+-webkit-background-clip: text;
+color: transparent;
     }
 
     .hero p {
-      font-size: 1.2rem;
       color: #cbd5e1;
-      max-width: 700px;
-      margin: auto;
       line-height: 1.6;
     }
 
     .cta-btn {
       display: inline-block;
-      margin-top: 40px;
-      padding: 14px 32px;
-      border-radius: 40px;
-      background: linear-gradient(90deg, #7c3aed, #06b6d4);
-      color: white;
+      margin-top: 30px;
+      padding: 14px 30px;
+      border-radius: 30px;
+      background: linear-gradient(90deg,#7c3aed,#06b6d4);
       text-decoration: none;
+      color: white;
       font-weight: 600;
       transition: 0.3s;
     }
 
     .cta-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(124,58,237,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(124,58,237,0.5);
     }
 
     section {
-      padding: 80px 20px;
-      max-width: 1100px;
-      margin: auto;
+      padding: 80px 8%;
     }
 
-    section h2 {
+    h2 {
       text-align: center;
-      font-size: 2.2rem;
       margin-bottom: 40px;
-      background: linear-gradient(90deg, #7c3aed, #06b6d4);
+      font-size: 2rem;
+      background: linear-gradient(90deg,#7c3aed,#06b6d4);
       background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+-webkit-background-clip: text;
+color: transparent;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
       gap: 30px;
     }
 
-    .card-box {
+    .card {
       background: rgba(255,255,255,0.05);
-      padding: 30px;
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
       transition: 0.3s;
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
     }
 
-    .card-box:hover {
-      transform: translateY(-8px);
+    .card:hover {
+      transform: translateY(-6px);
       box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
-    .feature-icon {
-      font-size: 2.2rem;
+    .card i {
+      font-size: 1.8rem;
       margin-bottom: 15px;
-      display: block;
-      background: linear-gradient(90deg, #7c3aed, #06b6d4);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
+      color: #06b6d4;
     }
 
-    .card-box h3 {
-      margin-top: 10px;
-      color: #ffffff;
+    .video-container {
+      display: flex;
+      justify-content: center;
     }
 
-    .about p {
-      text-align: center;
+    iframe {
+      width: 100%;
       max-width: 800px;
-      margin: auto;
-      color: #cbd5e1;
-      line-height: 1.7;
+      height: 450px;
+      border-radius: 15px;
     }
 
     footer {
@@ -123,9 +142,10 @@
       font-size: 0.9rem;
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.4rem;
+    @media(max-width: 900px){
+      .hero {
+        flex-direction: column;
+        text-align: center;
       }
     }
 
@@ -134,84 +154,84 @@
 
 <body>
 
+<nav>
+  <h2>CPU Scheduler</h2>
+  <div>
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#demo">Demo</a>
+    <a href="/simulator">Simulator</a>
+  </div>
+</nav>
+
 <section class="hero">
-  <h1>CPU Scheduling Simulator</h1>
-  <p>
-    Visualize and compare FCFS, SRTF, Round Robin and Priority scheduling
-    algorithms with animated Gantt charts and performance analysis.
-  </p>
-  <a href="/simulator" class="cta-btn">Launch Simulator</a>
-</section>
-
-<section>
-  <h2>Features</h2>
-  <div class="grid">
-
-    <div class="card-box">
-      <i class="fa-solid fa-microchip feature-icon"></i>
-      <h3>Real Algorithms</h3>
-      <p>Accurate backend implementation of scheduling logic.</p>
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-chart-gantt feature-icon"></i>
-      <h3>Gantt Visualization</h3>
-      <p>Interactive execution timeline representation.</p>
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-chart-line feature-icon"></i>
-      <h3>Performance Metrics</h3>
-      <p>Compare waiting time, turnaround time and response time.</p>
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-trophy feature-icon"></i>
-      <h3>Best Algorithm Detection</h3>
-      <p>Automatically identifies the optimal scheduling strategy.</p>
-    </div>
-
+  <div class="hero-text">
+    <h1>Understand CPU Scheduling Visually</h1>
+    <p>
+      Compare FCFS, SRTF, Round Robin and Priority scheduling
+      with animated Gantt charts and automatic performance analysis.
+    </p>
+    <a href="/simulator" class="cta-btn">Launch Simulator</a>
   </div>
 </section>
 
-<section class="about">
-  <h2>About The Project</h2>
-  <p>
-    This simulator is built using Flask and modern web technologies.
-    It is designed to help Operating System students understand scheduling
-    algorithms through interactive experimentation and performance comparison.
-  </p>
+<section id="features">
+  <h2>Key Features</h2>
+  <div class="grid">
+    <div class="card">
+      <i class="fa-solid fa-microchip"></i>
+      <h3>Real Implementation</h3>
+      <p>Accurate backend logic built using Flask.</p>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-chart-line"></i>
+      <h3>Performance Metrics</h3>
+      <p>Turnaround, Waiting & Response time analysis.</p>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-chart-gantt"></i>
+      <h3>Animated Gantt</h3>
+      <p>Visual execution timeline for each algorithm.</p>
+    </div>
+    <div class="card">
+      <i class="fa-solid fa-trophy"></i>
+      <h3>Best Algorithm</h3>
+      <p>Auto-detects the optimal algorithm.</p>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <h2>How It Works</h2>
+  <div class="grid">
+    <div class="card">1️⃣ Add Processes</div>
+    <div class="card">2️⃣ Set Time Quantum</div>
+    <div class="card">3️⃣ Run Simulation</div>
+    <div class="card">4️⃣ Compare Results</div>
+  </div>
+</section>
+
+<section id="demo">
+  <h2>Watch Demo</h2>
+  <div class="video-container">
+    <!-- Replace with your YouTube video link -->
+    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+            allowfullscreen></iframe>
+  </div>
 </section>
 
 <section>
-  <h2>Supported Algorithms</h2>
+  <h2>Why Use This Tool?</h2>
   <div class="grid">
-
-    <div class="card-box">
-      <i class="fa-solid fa-clock feature-icon"></i>
-      FCFS (First Come First Serve)
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-bolt feature-icon"></i>
-      SRTF (Shortest Remaining Time First)
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-rotate feature-icon"></i>
-      Round Robin (RR)
-    </div>
-
-    <div class="card-box">
-      <i class="fa-solid fa-layer-group feature-icon"></i>
-      Priority Scheduling
-    </div>
-
+    <div class="card">✔ Ideal for OS students</div>
+    <div class="card">✔ Interactive learning</div>
+    <div class="card">✔ Compare multiple algorithms</div>
+    <div class="card">✔ Clean and modern interface</div>
   </div>
 </section>
 
 <section style="text-align:center;">
-  <h2>Ready to Explore?</h2>
+  <h2>Start Exploring Now</h2>
   <a href="/simulator" class="cta-btn">Start Simulation</a>
 </section>
 
