@@ -5,6 +5,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    return render_template("home.html")
+
+@app.route("/simulator")
+def simulator():
     return render_template("index.html")
 
 @app.route("/run", methods=["POST"])
