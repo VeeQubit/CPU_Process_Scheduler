@@ -255,7 +255,7 @@ button:hover::before{
 
 .gantt{
   display:flex;
-  gap: 6px; /* 🔥 small spacing between blocks */
+  gap: 6px; /* ðŸ”¥ small spacing between blocks */
   padding: 6px;
 
   border-radius:14px;
@@ -280,7 +280,7 @@ button:hover::before{
 
   text-shadow:
     0 1px 2px rgba(0,0,0,0.8),
-    0 0 6px rgba(0,0,0,0.5); /* 🔥 text readable on any color */
+    0 0 6px rgba(0,0,0,0.5); /* ðŸ”¥ text readable on any color */
 
   transform-origin: left;
 }
@@ -327,7 +327,7 @@ button:hover::before{
 /* ============================= */
 /* PREMIUM STATS GRID (FINAL) */
 /* ============================= */
-/* ✅ STATS 6 BOX GRID (3 x 2) */
+/* âœ… STATS 6 BOX GRID (3 x 2) */
 
 .stats-section{
   flex: 1;
@@ -337,8 +337,8 @@ button:hover::before{
   grid-template-columns: repeat(3, minmax(160px, 1fr));
 
   gap: 14px;
-  margin-top: 43px;          /* ✅ remove big top gap */
-  align-content: start;   /* ✅ keep boxes aligned nicely */
+  margin-top: 43px;          /* âœ… remove big top gap */
+  align-content: start;   /* âœ… keep boxes aligned nicely */
 }
 
 /* responsive */
@@ -355,7 +355,7 @@ button:hover::before{
 }
 
 /* ============================= */
-/* ✅ PRO STAT BOX (NEW DESIGN)   */
+/* âœ… PRO STAT BOX (NEW DESIGN)   */
 /* ============================= */
 
 .stat-box{
@@ -581,8 +581,8 @@ button:hover::before{
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow-y: auto;     /* ✅ FIX cut */
-  padding-bottom: 30px; /* ✅ extra bottom space */
+  overflow-y: auto;     /* âœ… FIX cut */
+  padding-bottom: 30px; /* âœ… extra bottom space */
 }
 
 .modal-right h3{
@@ -621,7 +621,7 @@ button:hover::before{
 .modal-actions{
   margin-top: 40px;
   display: flex;
-  justify-content: flex-end;   /* 🔥 pushes buttons to right */
+  justify-content: flex-end;   /* ðŸ”¥ pushes buttons to right */
   gap: 14px;
 }
 
@@ -692,7 +692,7 @@ button:hover::before{
   color: #fecaca;
   font-size: 13px;
   line-height: 1.4;
-  max-height: 120px;     /* ✅ if too many messages */
+  max-height: 120px;     /* âœ… if too many messages */
   overflow-y: auto;   
 }
 
@@ -750,7 +750,7 @@ button:hover::before{
   padding-left: 20px;
   display:flex;
   flex-direction:column;
-  align-items:center;   /* 👈 align heading + table */
+  align-items:center;   /* ðŸ‘ˆ align heading + table */
 }
 
 /* Responsive: stack on small screens */
@@ -1047,7 +1047,7 @@ button.run-btn:disabled {
   filter: saturate(0.8);
 }
 /* ============================== */
-/* RUN BUTTON LEFT → RIGHT ENABLE */
+/* RUN BUTTON LEFT â†’ RIGHT ENABLE */
 /* ============================== */
 
 #runBtn{
@@ -1076,19 +1076,19 @@ button.run-btn:disabled {
 /* play only when enabling */
 .run-enable-slide::after{
   opacity: 1;
-  animation: runEnableSlide 3s ease forwards; /* ✅ 3 seconds */
+  animation: runEnableSlide 3s ease forwards; /* âœ… 3 seconds */
 }
 
 @keyframes runEnableSlide{
   from { left: -110%; }
   to   { left: 110%; }
-}/* Enable “pop” animation when it becomes active */
+}/* Enable â€œpopâ€ animation when it becomes active */
 
 #resultsSection{
-  scroll-margin-top: 50px;  /* ✅ heading won’t hide */
+  scroll-margin-top: 50px;  /* âœ… heading wonâ€™t hide */
 }
 
-/* ✅ ADD THIS AT THE VERY BOTTOM OF YOUR CSS (last lines) */
+/* âœ… ADD THIS AT THE VERY BOTTOM OF YOUR CSS (last lines) */
 /* (This will override old styles without breaking your page) */
 
 
@@ -1254,7 +1254,7 @@ button.run-btn:disabled {
 
 /* small star icon feel */
 .best-badge::before{
-  content: "★";
+  content: "â˜…";
   font-size: 12px;
   line-height: 1;
 }
@@ -1522,7 +1522,7 @@ button.run-btn:disabled {
   to{ opacity:1; transform: translateY(0); }
 }
 
-/* ✅ make letter-by-letter heading visible (gradient per letter) */
+/* âœ… make letter-by-letter heading visible (gradient per letter) */
 #resultsHeading.typewriter span{
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
   -webkit-background-clip: text;
@@ -1531,13 +1531,13 @@ button.run-btn:disabled {
   -webkit-text-fill-color: transparent;
 }
 
-/* ✅ hide summary rows BEFORE animation starts */
+/* âœ… hide summary rows BEFORE animation starts */
 #summaryTable.summary-animating .summary-table tr{
   opacity: 0;
   transform: translateY(10px);
 }
 
-/* ✅ During first table reveal, disable best highlight and badge */
+/* âœ… During first table reveal, disable best highlight and badge */
 #summaryTable.prebest .best-row td{
   background: rgba(255,255,255,0.04) !important;
   color: #e5e7eb !important;
@@ -1552,7 +1552,7 @@ button.run-btn:disabled {
 #summaryTable.prebest .best-badge{
   display: none !important;
 }
-/* ✅ Allow highlight ONLY for rows that are unlocked one-by-one */
+/* âœ… Allow highlight ONLY for rows that are unlocked one-by-one */
 #summaryTable.prebest .best-row.best-show td{
   background: linear-gradient(
     90deg,
@@ -1637,7 +1637,7 @@ button.run-btn:disabled {
   min-height: 220px;   /* adjust if your card is taller */
 }
 
-/* ✅ FIX Algorithms heading animation visibility */
+/* âœ… FIX Algorithms heading animation visibility */
 #algorithmsHeading.typewriter span{
   background: linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
   -webkit-background-clip: text;
@@ -1691,7 +1691,7 @@ button.run-btn:disabled {
 
 #algoButtons{
   display: flex;
-  justify-content: center;   /* 🔥 center */
+  justify-content: center;   /* ðŸ”¥ center */
   gap: 14px;
   flex-wrap: wrap;
   margin-bottom: 24px;
@@ -2035,7 +2035,7 @@ button.run-btn:disabled {
   transform: scale(0.95);
 }
 
-/* ✅ REAL color input sits on top (clickable), but invisible */
+/* âœ… REAL color input sits on top (clickable), but invisible */
 #processModal #mColor{
   position: absolute;
   inset: 0;
@@ -2151,7 +2151,7 @@ button.run-btn:disabled {
 
 /* NAV */
 .nav{
-  position: fixed;          /* ✅ change sticky → fixed */
+  position: fixed;          /* âœ… change sticky â†’ fixed */
   top: 0;
   left: 0;
   width: 100%;
@@ -2428,7 +2428,7 @@ button.run-btn:disabled {
 /* sections */
 .section{
   scroll-margin-top: 100px;
-  padding: 34px 0; /* ✅ no huge gaps */
+  padding: 34px 0; /* âœ… no huge gaps */
 }
 .section-head{
   margin-bottom: 16px;
@@ -2615,4 +2615,309 @@ button.run-btn:disabled {
 .github-link:hover {
   background: rgba(255,255,255,0.1);
   transform: scale(1.05);
+}
+/* ======================================================= */
+/* RESPONSIVE FIXES â€” PHONE / TABLET / DESKTOP             */
+/* ======================================================= */
+
+/* --- Base: prevent horizontal overflow everywhere --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+/* --- Body padding: comfortable on all screens --- */
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+/* Tablets (â‰¤ 768px) */
+@media (max-width: 768px) {
+  body {
+    padding: 12px 10px;
+  }
+
+  .main-title {
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+
+  h2 {
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-top: 30px;
+  }
+
+  /* Fix fixed-width tables */
+  #processTable,
+  #details .result-table,
+  .summary-table {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Fix fixed-width summary left panel */
+  .summary-left {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  /* Right panel heading fixed width */
+  .right-panel h3 {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  /* Process layout stacks vertically */
+  .process-layout {
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    max-width: 100%;
+    width: 100%;
+    padding-left: 0;
+  }
+
+  /* Process grid: 2 per row on tablet */
+  .process-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  /* Row with quantum + run button */
+  .row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .row button {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Gantt: horizontal scroll */
+  .gantt-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gantt {
+    min-width: max-content;
+    flex-wrap: nowrap;
+  }
+
+  /* Stats grid: 2 cols on tablet */
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+  }
+
+  /* Details layout stack */
+  .details-layout {
+    flex-direction: column;
+  }
+
+  /* Summary layout */
+  .summary-layout {
+    flex-direction: column;
+  }
+
+  /* Summary right */
+  .summary-right {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  /* Algorithm buttons wrap nicely */
+  .algo-bar {
+    gap: 8px;
+  }
+
+  .algo-btn {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  /* Card padding tighter */
+  .card {
+    padding: 12px 14px;
+  }
+
+  /* Feature grid: 2 cols */
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Phones (â‰¤ 480px) */
+@media (max-width: 480px) {
+  body {
+    padding: 8px 8px;
+  }
+
+  .main-title {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+  }
+
+  h2 {
+    font-size: 17px;
+    letter-spacing: 1.5px;
+  }
+
+  /* Single column process grid on phones */
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stats: 1 col on very small phones */
+  .stats-section {
+    grid-template-columns: 1fr;
+  }
+
+  /* Feature grid: 1 col */
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Steps: already 1 col via existing rule, keep */
+
+  /* Modal: full screen on phone */
+  .modal-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    flex-direction: column;
+  }
+
+  .modal-left {
+    display: none !important;
+  }
+
+  .modal-right {
+    padding: 24px 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .modal-right h3 {
+    margin-bottom: 24px;
+  }
+
+  /* Table cells smaller font */
+  .result-table td,
+  .result-table th,
+  #summaryTable .summary-table td,
+  #summaryTable .summary-table th {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  /* Btn row stacks */
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-row button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Block labels smaller */
+  .block {
+    font-size: 12px;
+    padding: 8px 6px;
+  }
+
+  .block small {
+    font-size: 10px;
+  }
+
+  /* Modal actions stack */
+  .modal-actions {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .modal-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* CTA card */
+  .cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  /* Footer */
+  .footer {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Quantum input full width */
+  #quantum {
+    width: 100%;
+  }
+
+  /* Hero mini grid: 1 col */
+  .hero-mini {
+    grid-template-columns: 1fr;
+  }
+
+  /* Nav */
+  .nav-links {
+    display: none;
+  }
+
+  .nav-burger {
+    display: block;
+  }
+}
+
+/* Touch-friendly: bigger tap targets on mobile */
+@media (hover: none) and (pointer: coarse) {
+  button, .algo-btn, .btn {
+    min-height: 44px;
+  }
+
+  input {
+    min-height: 44px;
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
+
+  select {
+    font-size: 16px;
+  }
+}
+
+/* Landscape phones */
+@media (max-width: 768px) and (orientation: landscape) {
+  .modal-content {
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+
+  .modal-left {
+    display: none !important;
+  }
 }
