@@ -1,223 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!--  PRIMARY SEO -->
-  <title>CPU Scheduling Simulator – Visualize FCFS, SRTF, Round Robin & Priority Algorithms</title>
-
-  <meta name="description"
-        content="Interactive CPU Scheduling Simulator to visualize FCFS, SRTF, Round Robin and Priority scheduling algorithms with animated Gantt charts and performance comparison. Built using Flask." />
-
-  <meta name="keywords"
-        content="CPU Scheduling Simulator, FCFS, SRTF, Round Robin, Priority Scheduling, Operating Systems Lab Tool, Gantt Chart Visualization" />
-
-  <meta name="author" content="CPU Scheduling Simulator" />
-  <meta name="robots" content="index, follow" />
-
-  <!--  Canonical -->
-  <link rel="canonical" href="https://cpu-scheduler.up.railway.app/" />
-
-  <!--  Open Graph (Facebook / LinkedIn) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="CPU Scheduling Simulator – Interactive OS Learning Tool" />
-  <meta property="og:description"
-        content="Compare FCFS, SRTF, Round Robin and Priority scheduling algorithms with animated Gantt charts and automatic best-algorithm detection." />
-  <meta property="og:url" content="https://cpu-scheduler.up.railway.app/" />
-  <meta property="og:image" content="https://cpu-scheduler.up.railway.app/static/preview.png" />
-
-  <!--  Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CPU Scheduling Simulator" />
-  <meta name="twitter:description"
-        content="Visualize CPU scheduling algorithms with real-time Gantt chart simulation." />
-  <meta name="twitter:image"
-        content="https://cpu-scheduler.up.railway.app/static/preview.png" />
-
-  <!--  PWA -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CPU Scheduling Simulator – Visualize FCFS, SRTF, Round Robin & Priority</title>
+  <meta name="description" content="Interactive CPU Scheduling Simulator to visualize FCFS, SRTF, Round Robin and Priority algorithms with animated Gantt charts."/>
+  <link rel="canonical" href="https://cpu-scheduler.up.railway.app/"/>
   <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#0b0f14">
-
-  <!-- 🔥 Favicon (create this file in /static) -->
+  <meta name="theme-color" content="#070b10">
   <link rel="icon" type="image/png" href="/static/favicon.png">
-
-  <!-- Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
-
-  <!-- Smooth Scroll -->
-  <style>
-    html { scroll-behavior: smooth; }
-  </style>
 </head>
-
 <body class="home-body">
 
-  <!-- Background decorations -->
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob b1"></span>
-    <span class="blob b2"></span>
-    <span class="blob b3"></span>
-    <span class="grid"></span>
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-glow g1"></div>
+    <div class="bg-glow g2"></div>
+    <div class="bg-glow g3"></div>
+    <div class="floating-particles" id="particles"></div>
   </div>
 
   <!-- NAVBAR -->
-  <header class="nav">
+  <header class="nav" id="mainNav">
     <div class="nav-inner">
       <a class="brand" href="/">
-        <span class="brand-dot"></span>
-        <span class="brand-text">CPU Scheduler</span>
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+            <rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="brand-text">CPU<span class="brand-accent">Scheduler</span></span>
       </a>
-
       <nav class="nav-links">
-  <a href="#features">Features</a>
-  <a href="#how">How it works</a>
-  <a href="#demo">Demo</a>
-
-  <!-- GitHub Icon -->
-  <a href="https://github.com/VeeQubit/CPU_Process_Scheduler"
-     target="_blank"
-     class="github-link"
-     aria-label="GitHub Repository">
-    <svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor">
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 
-      6.53 5.47 7.59.4.07.55-.17.55-.38
-      0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94
-      -.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
-      -.01-.53.63-.01 1.08.58 1.23.82.72 1.21
-      1.87.87 2.33.66.07-.52.28-.87.51-1.07
-      -1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59
-      .82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67
-      -.21 2.2.82.64-.18 1.32-.27 2-.27.68
-      0 1.36.09 2 .27 1.53-1.04 2.2-.82
-      2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
-      1.27.82 2.15 0 3.07-1.87 3.75-3.65
-      3.95.29.25.54.73.54 1.48 0 1.07
-      -.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013
-      8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-    </svg>
-  </a>
-
-  <a class="nav-cta" href="/simulator">Simulator</a>
-</nav>
-
-      <button class="nav-burger" aria-label="Open menu" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
-      </button>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#how" class="nav-link">How It Works</a>
+        <a href="#algorithms" class="nav-link">Algorithms</a>
+        <a href="https://github.com/VeeQubit/CPU_Process_Scheduler" target="_blank" class="nav-link nav-github" aria-label="GitHub">
+          <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+        <a class="nav-cta" href="/explore">
+          <span>Open Simulator</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5l12 7-12 7V5z"/></svg>
+        </a>
+      </nav>
+      <button class="nav-burger" aria-label="Open menu" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
-
-    <!-- mobile menu -->
     <div id="mobileMenu" class="nav-mobile hidden">
       <a href="#features" onclick="toggleMenu()">Features</a>
-      <a href="#how" onclick="toggleMenu()">How it works</a>
-      <a href="#demo" onclick="toggleMenu()">Demo</a>
-      <a class="nav-cta" href="/simulator" onclick="toggleMenu()">Simulator</a>
+      <a href="#how" onclick="toggleMenu()">How It Works</a>
+      <a href="#algorithms" onclick="toggleMenu()">Algorithms</a>
+      <a class="nav-cta" href="/explore" onclick="toggleMenu()">Open Simulator</a>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main class="container">
+  <main class="home-main">
+
+    <!-- HERO -->
     <section class="hero">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="badge-dot"></span>
-          Interactive OS Learning Tool
+      <div class="hero-content">
+        <div class="hero-badge animate-in" style="--delay:0ms">
+          <span class="badge-pulse"></span>
+          <span>Interactive OS Learning Tool</span>
         </div>
-
-        <h1 class="hero-title">
-          Understand <span class="grad">CPU Scheduling</span><br/>
-          with Visual Simulation
+        <h1 class="hero-title animate-in" style="--delay:100ms">
+          Master <span class="hero-grad">CPU Scheduling</span><br/>Through Simulation
         </h1>
-
-        <p class="hero-sub">
-          Compare FCFS, SRTF, Round Robin and Priority Scheduling with animated Gantt charts,
-          detailed tables, and automatic best-algorithm selection.
+        <p class="hero-sub animate-in" style="--delay:200ms">
+          Visualize FCFS, SRTF, Round Robin and Priority algorithms with animated Gantt charts, real performance metrics, and automatic best-algorithm detection.
         </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/simulator">
-            <span class="btn-ico" aria-hidden="true">
-              <!-- play icon -->
-              <svg viewBox="0 0 24 24" width="18" height="18">
-                <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
-              </svg>
-            </span>
+        <div class="hero-actions animate-in" style="--delay:300ms">
+          <a class="btn btn-primary btn-lg" href="/explore">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5l12 7-12 7V5z"/></svg>
             Launch Simulator
           </a>
-
-          <a class="btn btn-ghost" href="#demo">
-            <span class="btn-ico" aria-hidden="true">
-              <!-- video icon -->
-              <svg viewBox="0 0 24 24" width="18" height="18">
-                <path d="M15 10l6-3v10l-6-3v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2z"
-                      fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            Watch Demo
+          <a class="btn btn-ghost btn-lg" href="#how">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg>
+            See How It Works
           </a>
         </div>
-
-        <div class="hero-mini">
-          <div class="mini-item">
-            <div class="mini-top">Real Backend</div>
-            <div class="mini-bottom">Flask + Algorithms</div>
-          </div>
-          <div class="mini-item">
-            <div class="mini-top">Animated</div>
-            <div class="mini-bottom">Gantt + Tables</div>
-          </div>
-          <div class="mini-item">
-            <div class="mini-top">Metrics</div>
-            <div class="mini-bottom">WT • TAT • RT</div>
-          </div>
+        <div class="hero-stats animate-in" style="--delay:400ms">
+          <div class="stat-item"><span class="stat-num">6</span><span class="stat-label">Algorithms</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-item"><span class="stat-num">5</span><span class="stat-label">Metrics</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Processes</span></div>
         </div>
       </div>
 
-      <!-- HERO RIGHT: mockup image -->
-      <div class="hero-right">
-        <div class="mock-card">
-          <div class="mock-top">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-            <span class="mock-title">CPU Scheduling Simulator</span>
+      <div class="hero-visual animate-in" style="--delay:200ms">
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dots"><span class="tdot red"></span><span class="tdot yellow"></span><span class="tdot green"></span></div>
+            <span class="terminal-title">scheduler.py — simulation running</span>
+            <div class="terminal-status"><span class="status-dot"></span>LIVE</div>
           </div>
-
-          <!-- You can replace this with a real screenshot later -->
-          <div class="mock-body">
-            <div class="mock-row">
-              <div class="mock-chip">FCFS</div>
-              <div class="mock-chip">SRTF</div>
-              <div class="mock-chip">RR</div>
-              <div class="mock-chip">Priority</div>
+          <div class="terminal-body">
+            <div class="algo-chips">
+              <span class="algo-chip active">FCFS</span><span class="algo-chip">SPN</span>
+              <span class="algo-chip best">SRTF ★</span><span class="algo-chip">RR</span>
+              <span class="algo-chip">Pri·NP</span><span class="algo-chip">Pri·P</span>
             </div>
-
-            <div class="mock-gantt">
-              <div class="seg s1">P1</div>
-              <div class="seg s2">P2</div>
-              <div class="seg s3">P3</div>
-              <div class="seg s4">P4</div>
+            <div class="gantt-label">Gantt Chart — SRTF</div>
+            <div class="gantt-mock">
+              <div class="gm-block" style="--w:2;--c:#3b82f6">P1</div>
+              <div class="gm-block" style="--w:3;--c:#10b981">P2</div>
+              <div class="gm-block" style="--w:1;--c:#3b82f6">P1</div>
+              <div class="gm-block" style="--w:2;--c:#f59e0b">P3</div>
+              <div class="gm-block" style="--w:3;--c:#ef4444">P4</div>
             </div>
-
-            <div class="mock-grid">
-              <div class="mg">
-                <div class="mgl">Avg WT</div>
-                <div class="mgv">3.25</div>
-              </div>
-              <div class="mg">
-                <div class="mgl">Avg TAT</div>
-                <div class="mgv">7.50</div>
-              </div>
-              <div class="mg">
-                <div class="mgl">Best</div>
-                <div class="mgv gradtext">SRTF</div>
-              </div>
-              <div class="mg">
-                <div class="mgl">Quantum</div>
-                <div class="mgv">2</div>
-              </div>
-            </div>
-
-            <div class="mock-note">
-              Tip: Add processes → Run → Compare algorithms → View best selection.
+            <div class="gantt-ticks"><span>0</span><span>2</span><span>5</span><span>6</span><span>8</span><span>11</span></div>
+            <div class="metrics-grid">
+              <div class="metric-box"><div class="metric-label">Avg WT</div><div class="metric-val">2.50</div></div>
+              <div class="metric-box"><div class="metric-label">Avg TAT</div><div class="metric-val">6.75</div></div>
+              <div class="metric-box highlight-metric"><div class="metric-label">CPU Util</div><div class="metric-val">100%</div></div>
+              <div class="metric-box"><div class="metric-label">Throughput</div><div class="metric-val">0.36</div></div>
             </div>
           </div>
         </div>
@@ -227,61 +128,36 @@
     <!-- FEATURES -->
     <section id="features" class="section">
       <div class="section-head">
-        <h2 class="section-title">Key Features</h2>
-        <p class="section-sub">Everything you need to learn scheduling faster and clearly.</p>
+        <div class="section-tag">Core Capabilities</div>
+        <h2 class="section-title">Everything You Need to Master Scheduling</h2>
+        <p class="section-sub">Real backend algorithms, not fake animations. Accurate results with deep comparison tools.</p>
       </div>
-
       <div class="feature-grid">
-        <div class="feature-card">
-          <div class="f-icon">
-            <!-- cpu icon -->
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"
-                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <rect x="7" y="7" width="10" height="10" rx="2"
-                    fill="none" stroke="currentColor" stroke-width="2"/>
-            </svg>
-          </div>
-          <h3>Real Algorithms</h3>
-          <p>Backend logic implemented properly — not fake animation. Accurate Gantt + calculations.</p>
+        <div class="feature-card fc-large">
+          <div class="fc-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke-linecap="round"/></svg></div>
+          <h3>Real Algorithm Engine</h3>
+          <p>Backend logic implemented in Python — FCFS, SPN, SRTF, RR, Priority (NP & P) with accurate Gantt generation, waiting time, turnaround, response time, throughput, and CPU utilization calculations.</p>
+          <div class="fc-tags"><span>Python + Flask</span><span>Real Calculations</span><span>6 Algorithms</span></div>
         </div>
-
         <div class="feature-card">
-          <div class="f-icon">
-            <!-- gantt icon -->
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M7 14h6M7 10h10M7 6h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>Gantt Visualization</h3>
-          <p>See execution order instantly with readable blocks and time markers.</p>
+          <div class="fc-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14h6M7 10h10M7 6h4" stroke-linecap="round"/></svg></div>
+          <h3>Animated Gantt Charts</h3>
+          <p>Watch execution order build in real-time with smooth proportional animations. Toggle animation on or off.</p>
         </div>
-
         <div class="feature-card">
-          <div class="f-icon">
-            <!-- chart icon -->
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path d="M4 19V5M4 19h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M7 14l3-3 3 2 4-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+          <div class="fc-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 0-2 2h-2a2 2 0 0 0-2-2z"/></svg></div>
           <h3>Performance Metrics</h3>
-          <p>Compare Average Waiting Time, Turnaround Time, Response Time — clearly.</p>
+          <p>WT, TAT, RT, Throughput and CPU Utilization — ranked and scored with tie-aware comparison logic.</p>
         </div>
-
         <div class="feature-card">
-          <div class="f-icon">
-            <!-- trophy icon -->
-            <svg viewBox="0 0 24 24" width="22" height="22">
-              <path d="M8 4h8v3a4 4 0 0 1-8 0V4z" fill="none" stroke="currentColor" stroke-width="2"/>
-              <path d="M6 7H4a3 3 0 0 0 3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M18 7h2a3 3 0 0 1-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              <path d="M12 11v3M9 21h6M10 14h4l1 4H9l1-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>Best Algorithm</h3>
-          <p>Automatically selects the best approach based on calculated metrics.</p>
+          <div class="fc-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke-linejoin="round"/></svg></div>
+          <h3>Side-by-Side Compare</h3>
+          <p>Pick any two algorithms and compare Gantt charts and metrics diff tables simultaneously.</p>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 4h8v3a4 4 0 0 1-8 0V4z"/><path d="M6 7H4a3 3 0 0 0 3 3M18 7h2a3 3 0 0 1-3 3" stroke-linecap="round"/><path d="M12 11v3M9 21h6M10 14h4l1 4H9l1-4z" stroke-linejoin="round"/></svg></div>
+          <h3>Best Algorithm Picker</h3>
+          <p>Automatically selects the optimal algorithm using multi-criteria scoring with detailed reasoning.</p>
         </div>
       </div>
     </section>
@@ -289,145 +165,98 @@
     <!-- HOW IT WORKS -->
     <section id="how" class="section">
       <div class="section-head">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-sub">Simple workflow — designed for students.</p>
+        <div class="section-tag">Workflow</div>
+        <h2 class="section-title">Three Steps to Understand Scheduling</h2>
+        <p class="section-sub">A clean, structured workflow built for both students and OS researchers.</p>
       </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-no">01</div>
-          <div class="step-body">
-            <h3>Add Processes</h3>
-            <p>Enter Arrival Time, Burst Time, Priority and choose a color for clear tracking.</p>
-          </div>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <div class="step-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+          <h3>Define Processes</h3>
+          <p>Enter Arrival Time, Burst Time, and Priority. Assign a color per process for visual identification in Gantt charts.</p>
         </div>
-
-        <div class="step">
-          <div class="step-no">02</div>
-          <div class="step-body">
-            <h3>Run Scheduler</h3>
-            <p>Click run (and set quantum for RR). The backend runs all algorithms in one request.</p>
-          </div>
+        <div class="step-arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <div class="step-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 5l12 7-12 7V5z"/></svg></div>
+          <h3>Choose Your Mode</h3>
+          <p>Run all 6 algorithms together for a full ranking, compare two head-to-head, or focus on a single algorithm.</p>
         </div>
-
-        <div class="step">
-          <div class="step-no">03</div>
-          <div class="step-body">
-            <h3>Compare & Learn</h3>
-            <p>Check Gantt charts + tables + metrics. See which algorithm performs best for your input.</p>
-          </div>
+        <div class="step-arrow"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <div class="step-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14l3-3 3 2 4-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Analyze &amp; Learn</h3>
+          <p>Study Gantt charts, process tables, and ranked performance metrics. Understand why one algorithm outperforms another.</p>
         </div>
       </div>
     </section>
 
-    <!-- DEMO / VIDEO -->
-<section id="demo" class="section">
-  <div class="section-head">
-    <h2 class="section-title">Demo Video</h2>
-    <p class="section-sub">
-      Watch how the CPU Scheduling Simulator works in real time.
-    </p>
-  </div>
-
-  <div class="video-wrap">
-    <div class="video-placeholder-clean">
-      <div class="vp-play-icon">
-        <svg viewBox="0 0 24 24" width="28" height="28">
-          <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
-        </svg>
+    <!-- ALGORITHMS -->
+    <section id="algorithms" class="section">
+      <div class="section-head">
+        <div class="section-tag">Supported Algorithms</div>
+        <h2 class="section-title">Six Scheduling Algorithms</h2>
+        <p class="section-sub">From simplest to most advanced — all implemented with full preemption support.</p>
       </div>
-      <p class="vp-clean-text">Demo video coming soon</p>
-    </div>
-  </div>
-</section>
-
-    <!-- FINAL CTA -->
-    <section class="cta">
-      <div class="cta-card">
-        <div>
-          <h2 class="cta-title">Ready to Explore?</h2>
-          <p class="cta-sub">Start simulation now and learn CPU scheduling with real results.</p>
-        </div>
-        <a class="btn btn-primary" href="/simulator">
-          Start Simulation
-          <span class="btn-ico" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="18" height="18">
-              <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
-            </svg>
-          </span>
-        </a>
+      <div class="algo-showcase">
+        <div class="algo-item"><div class="algo-badge">Non-Preemptive</div><div class="algo-name-big">FCFS</div><div class="algo-fullname">First Come First Serve</div><p>Executes processes in strict arrival order. Simple and fair but can cause the convoy effect with long jobs.</p><div class="algo-complexity">O(n log n)</div></div>
+        <div class="algo-item"><div class="algo-badge">Non-Preemptive</div><div class="algo-name-big">SPN</div><div class="algo-fullname">Shortest Process Next</div><p>Minimizes average waiting time by selecting the shortest burst process from the ready queue.</p><div class="algo-complexity">O(n²)</div></div>
+        <div class="algo-item best-algo"><div class="algo-badge preemptive-badge">Preemptive ★</div><div class="algo-name-big">SRTF</div><div class="algo-fullname">Shortest Remaining Time First</div><p>Optimal average waiting time. Preempts the running process whenever a shorter job arrives.</p><div class="algo-complexity">O(n²)</div></div>
+        <div class="algo-item"><div class="algo-badge preemptive-badge">Preemptive</div><div class="algo-name-big">RR</div><div class="algo-fullname">Round Robin</div><p>Time-sharing with configurable quantum. Provides fair CPU time distribution across all processes.</p><div class="algo-complexity">O(n)</div></div>
+        <div class="algo-item"><div class="algo-badge">Non-Preemptive</div><div class="algo-name-big">Pri·NP</div><div class="algo-fullname">Priority Non-Preemptive</div><p>Runs the highest-priority process to completion before scheduling the next one.</p><div class="algo-complexity">O(n²)</div></div>
+        <div class="algo-item"><div class="algo-badge preemptive-badge">Preemptive</div><div class="algo-name-big">Pri·P</div><div class="algo-fullname">Priority Preemptive</div><p>Can interrupt the running process when a higher-priority job arrives in the queue.</p><div class="algo-complexity">O(n²)</div></div>
       </div>
     </section>
 
-    <footer class="footer">
-  <div>
-    © 2026 CPU Scheduler • Built with Flask
-  </div>
+    <!-- CTA -->
+    <section class="cta-section">
+      <div class="cta-inner">
+        <div class="cta-text">
+          <h2>Ready to Simulate?</h2>
+          <p>Choose your mode — compare all algorithms or dive deep into one.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-primary btn-lg" href="/explore">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5l12 7-12 7V5z"/></svg>
+            Launch Simulator
+          </a>
+          <a class="btn btn-ghost btn-lg" href="https://github.com/VeeQubit/CPU_Process_Scheduler" target="_blank">
+            <svg height="18" viewBox="0 0 16 16" width="18" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <div class="footer-links">
-    <a href="/simulator">Simulator</a>
-    <a href="#features">Features</a>
-
-    <a href="https://github.com/VeeQubit/CPU_Process_Scheduler"
-       target="_blank"
-       aria-label="GitHub Repository">
-      <svg height="20" viewBox="0 0 16 16" width="20" fill="currentColor">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 
-        6.53 5.47 7.59.4.07.55-.17.55-.38
-        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94
-        -.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
-        -.01-.53.63-.01 1.08.58 1.23.82.72 1.21
-        1.87.87 2.33.66.07-.52.28-.87.51-1.07
-        -1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59
-        .82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67
-        -.21 2.2.82.64-.18 1.32-.27 2-.27.68
-        0 1.36.09 2 .27 1.53-1.04 2.2-.82
-        2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
-        1.27.82 2.15 0 3.07-1.87 3.75-3.65
-        3.95.29.25.54.73.54 1.48 0 1.07
-        -.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013
-        8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-    </a>
-  </div>
-</footer>
+    <footer class="home-footer">
+      <div class="footer-brand"><div class="brand-icon small"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/></svg></div>CPU<span class="brand-accent">Scheduler</span></div>
+      <div style="font-size:13px;color:var(--text3)">© 2026 CPU Scheduler · Built with Flask &amp; Python</div>
+      <div class="footer-links"><a href="/explore">Simulator</a><a href="#features">Features</a><a href="https://github.com/VeeQubit/CPU_Process_Scheduler" target="_blank">GitHub</a></div>
+    </footer>
   </main>
 
   <script>
-  function toggleMenu(){
-    const el = document.getElementById("mobileMenu");
-    el.classList.toggle("hidden");
-  }
+    window.addEventListener("scroll", () => {
+      document.getElementById("mainNav").classList.toggle("scrolled", window.scrollY > 20);
+    });
+    function toggleMenu() { document.getElementById("mobileMenu").classList.toggle("hidden"); }
 
-  // ✅ Premium fixed navbar scroll effect
-  window.addEventListener("scroll", function(){
-    const nav = document.querySelector(".nav");
-    if(window.scrollY > 20){
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); }
+    }), { threshold: 0.1 });
+    document.querySelectorAll(".feature-card,.step-card,.algo-item,.section-head").forEach(el => {
+      el.classList.add("scroll-reveal"); io.observe(el);
+    });
+
+    const c = document.getElementById("particles");
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement("div"); p.className = "particle";
+      p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*8}s;animation-duration:${7+Math.random()*8}s;width:${2+Math.random()*2}px;height:${2+Math.random()*2}px;opacity:${0.08+Math.random()*0.2}`;
+      c.appendChild(p);
     }
-  });
-
-  // Service worker (optional)
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
-  }
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "CPU Scheduling Simulator",
-  "applicationCategory": "EducationalApplication",
-  "operatingSystem": "Web",
-  "description": "Interactive CPU Scheduling Simulator to visualize FCFS, SRTF, Round Robin and Priority scheduling algorithms.",
-  "url": "https://cpu-scheduler.up.railway.app/",
-  "creator": {
-    "@type": "Organization",
-    "name": "CPU Scheduling Simulator"
-  }
-}
-</script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
+  </script>
 </body>
 </html>

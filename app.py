@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, jsonify
-from algorithms import *
-from flask import send_from_directory
+from flask import Flask, render_template, request, jsonify, send_from_directory
+from algorithms import fcfs, spn, srtf, round_robin, priority_np, priority_p, select_best_algorithms
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/explore")
+def explore():
+    return render_template("explore.html")
 
 @app.route("/simulator")
 def simulator():
@@ -27,38 +30,31 @@ def run():
     quantum = data.get("quantum", 2)
 
     algos = {
-        "FCFS": fcfs,
-        "SPN": spn,
-        "SRTF": srtf,
-        "RR": lambda p: round_robin(p, quantum),
+        "FCFS":        fcfs,
+        "SPN":         spn,
+        "SRTF":        srtf,
+        "RR":          lambda p: round_robin(p, quantum),
         "Priority NP": priority_np,
-        "Priority P": priority_p
+        "Priority P":  priority_p
     }
 
     raw_results = {}
-
-    # Run all algorithms
     for name, func in algos.items():
         gantt, table = func(processes)
         raw_results[name] = (gantt, table)
 
-    # Select best and calculate metrics
     best, metrics = select_best_algorithms(raw_results)
 
-    # Format response for frontend
-    formatted_results = {}
-
-    for name, (gantt, table) in raw_results.items():
-        formatted_results[name] = {
-            "gantt": gantt,
-            "table": table,
+    formatted_results = {
+        name: {
+            "gantt":   gantt,
+            "table":   table,
             "metrics": metrics[name]
         }
+        for name, (gantt, table) in raw_results.items()
+    }
 
-    return jsonify({
-        "results": formatted_results,
-        "best": best
-    })
+    return jsonify({"results": formatted_results, "best": best})
 
 if __name__ == "__main__":
     app.run(debug=True)

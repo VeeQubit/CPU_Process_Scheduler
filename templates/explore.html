@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Choose Mode — CPU Scheduler</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="sim-body">
+
+  <div class="bg-canvas" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-glow g1"></div>
+    <div class="bg-glow g2"></div>
+  </div>
+
+  <nav class="sim-nav">
+    <div class="sim-nav-left">
+      <a class="brand" href="/" style="text-decoration:none">
+        <div class="brand-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="brand-text">CPU<span class="brand-accent">Scheduler</span></span>
+      </a>
+      <span class="sim-nav-sep">/</span>
+      <span class="sim-nav-page">Choose Mode</span>
+    </div>
+    <a href="https://github.com/VeeQubit/CPU_Process_Scheduler" target="_blank" class="btn btn-ghost btn-sm">
+      <svg height="14" viewBox="0 0 16 16" width="14" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </nav>
+
+  <div class="explore-page" style="position:relative;z-index:1">
+    <div class="hero-badge" style="display:inline-flex;margin-bottom:20px">
+      <span class="badge-pulse"></span>
+      <span>Select Your Simulation Mode</span>
+    </div>
+    <h1 class="explore-title">How would you like<br/>to simulate?</h1>
+    <p class="explore-sub">Each mode is designed for a different type of analysis. Pick the one that fits your goal.</p>
+
+    <div class="mode-cards">
+
+      <!-- Full Compare All -->
+      <a href="/simulator?mode=all" class="mode-card"
+         style="--mc-color:rgba(167,139,250,0.5);--mc-bg:rgba(167,139,250,0.08);--mc-text:#c4b5fd">
+        <div class="mc-icon" style="--mc-bg:rgba(167,139,250,0.12);--mc-color:rgba(167,139,250,0.3);--mc-text:#c4b5fd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="mc-tag">Recommended</span>
+        <div class="mc-title">Compare All Algorithms</div>
+        <div class="mc-desc">Run all 6 scheduling algorithms simultaneously. Get a ranked performance table, best-algorithm detection, and animated Gantt charts for each.</div>
+        <div class="mc-arrow">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+      <!-- Head-to-Head -->
+      <a href="/simulator?mode=compare2" class="mode-card"
+         style="--mc-color:rgba(34,211,238,0.5);--mc-bg:rgba(34,211,238,0.08);--mc-text:#67e8f9">
+        <div class="mc-icon" style="--mc-bg:rgba(34,211,238,0.12);--mc-color:rgba(34,211,238,0.3);--mc-text:#67e8f9">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M18 20V10M12 20V4M6 20v-6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="mc-tag">Analysis</span>
+        <div class="mc-title">Head-to-Head Compare</div>
+        <div class="mc-desc">Select any two algorithms and compare them side by side with synchronized Gantt charts and a metric difference table.</div>
+        <div class="mc-arrow">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+      <!-- Single Algorithm -->
+      <a href="/simulator?mode=single" class="mode-card"
+         style="--mc-color:rgba(59,130,246,0.5);--mc-bg:rgba(59,130,246,0.08);--mc-text:#93c5fd">
+        <div class="mc-icon" style="--mc-bg:rgba(59,130,246,0.12);--mc-color:rgba(59,130,246,0.3);--mc-text:#93c5fd">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 19V5M4 19h16" stroke-linecap="round"/>
+            <path d="M7 14h6M7 10h10M7 6h4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="mc-tag">Deep Dive</span>
+        <div class="mc-title">Single Algorithm</div>
+        <div class="mc-desc">Focus on one algorithm at a time. Study the Gantt chart, detailed process table, and performance stats in full depth.</div>
+        <div class="mc-arrow">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+
+    </div>
+
+    <div style="text-align:center;color:var(--text3);font-size:13px">
+      Not sure? Start with <a href="/simulator?mode=all" style="color:var(--blue2);font-weight:600">Compare All</a> — you can always switch modes.
+    </div>
+  </div>
+
+</body>
+</html>

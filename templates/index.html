@@ -1,177 +1,251 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CPU Scheduling Simulator</title>
-  
-  <meta name="google-site-verification" content="pLZgCSHAw5y8szGgjwKoAja2tP25e5O00JKmXzvLaa8" />
-
+  <link rel="icon" type="image/png" href="/static/favicon.png">
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#070b10">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/static/style.css">
-   <link rel="manifest" href="/static/manifest.json">
-  <meta name="theme-color" content="#0b0f14">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body class="sim-body">
 
-  <h1 class="main-title">CPU SCHEDULING SIMULATOR</h1>
+  <!-- TOP NAV -->
+  <nav class="sim-nav">
+    <div class="sim-nav-left">
+      <a class="brand" href="/" style="text-decoration:none">
+        <div class="brand-icon"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="7" y="7" width="10" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <span class="brand-text">CPU<span class="brand-accent">Scheduler</span></span>
+      </a>
+      <span class="sim-nav-sep">/</span>
+      <span class="sim-nav-page" id="modeLabel">Simulator</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span id="modeBadge" class="mode-badge compare">All Algorithms</span>
+      <a href="/explore" class="btn btn-ghost btn-sm">Change Mode</a>
+    </div>
+  </nav>
 
-  <div class="card">
+  <div class="sim-wrapper">
 
-    <div class="process-layout">
-
-      <!-- LEFT SIDE: Process Cards -->
-      <div class="left-panel">
-        <h3>Processes</h3>
-        <p class="muted">Add a process to simulate it</p>
-
-        <div id="processList" class="process-grid"></div>
-
-        <div class="btn-row">
-  <button class="add-btn" onclick="openModal()">
-    <span class="btn-icon">
-      <svg viewBox="0 0 24 24" width="16" height="16">
-        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </span>
-    Add Process
-  </button>
-
-  <button class="danger" onclick="clearProcesses()">
-    <span class="btn-icon">
-      <svg viewBox="0 0 24 24" width="16" height="16">
-        <path d="M3 6h18M8 6v-2h8v2M6 6l1 14h10l1-14"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"/>
-      </svg>
-    </span>
-    Clear All
-  </button>
-</div>
+    <!-- PAGE HEADER -->
+    <div class="sim-header">
+      <div class="sim-header-left">
+        <div class="sim-title" id="pageTitle">CPU Scheduling Simulator</div>
+        <div class="sim-subtitle" id="pageSubtitle">Add processes, configure settings, then run the scheduler</div>
       </div>
-
-      <!-- RIGHT SIDE: Process Table -->
-      <div class="right-panel">
-        <h3>Process Table</h3>
-
-        <table class="result-table" id="processTable">
-          <tr>
-            <th>PID</th>
-            <th>Arrival</th>
-            <th>Burst</th>
-            <th>Priority</th>
-          </tr>
-        </table>
+      <div class="sim-header-right">
+        <!-- Animation toggle -->
+        <label class="anim-toggle-wrap" onclick="toggleAnimation()" title="Toggle Gantt animation">
+          <div class="toggle-track on" id="animToggle"><div class="toggle-thumb"></div></div>
+          <span id="animLabel">Animated</span>
+        </label>
       </div>
-
     </div>
 
-    <!-- Bottom Controls -->
-    <div class="row">
-      <label>Quantum (RR)</label>
-      <input type="number" id="quantum" value="2" min="1">
-     <button id="runBtn" class="run-btn" onclick="runScheduler()">
-  <span class="btn-icon">
-    <svg viewBox="0 0 24 24" width="16" height="16">
-      <path d="M8 5l12 7-12 7V5z" fill="currentColor"/>
-    </svg>
-  </span>
-  Run Scheduler
-</button>
+    <!-- TWO-COLUMN LAYOUT -->
+    <div class="sim-layout">
+
+      <!-- LEFT PANEL: Process Input -->
+      <div>
+        <div class="sim-card">
+          <div class="sim-card-title">Process Queue</div>
+
+          <!-- Process cards -->
+          <div id="processList"></div>
+
+          <!-- Button row -->
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-primary btn-sm" onclick="openModal()" style="flex:1">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add Process
+            </button>
+            <button class="btn btn-danger btn-sm" onclick="clearProcesses()" style="flex:1">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+              Reset All
+            </button>
+          </div>
+        </div>
+
+        <!-- Single algorithm selector (shown only in single mode) -->
+        <div id="singleAlgoCard" class="sim-card hidden" style="margin-top:16px">
+          <div class="sim-card-title">Select Algorithm</div>
+          <div class="algo-selector" id="algoSelector">
+            <button class="algo-sel-btn active" data-algo="FCFS" onclick="selectSingleAlgo('FCFS',this)">FCFS</button>
+            <button class="algo-sel-btn" data-algo="SPN" onclick="selectSingleAlgo('SPN',this)">SPN</button>
+            <button class="algo-sel-btn" data-algo="SRTF" onclick="selectSingleAlgo('SRTF',this)">SRTF</button>
+            <button class="algo-sel-btn" data-algo="RR" onclick="selectSingleAlgo('RR',this)">RR</button>
+            <button class="algo-sel-btn" data-algo="Priority NP" onclick="selectSingleAlgo('Priority NP',this)">Pri·NP</button>
+            <button class="algo-sel-btn" data-algo="Priority P" onclick="selectSingleAlgo('Priority P',this)">Pri·P</button>
+          </div>
+        </div>
+
+        <!-- Compare2 selectors (shown in compare2 mode) -->
+        <div id="compare2Card" class="sim-card hidden" style="margin-top:16px">
+          <div class="sim-card-title">Select Two Algorithms</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Algorithm A</div>
+              <div class="algo-selector" id="algoSelectorA">
+                <button class="algo-sel-btn active" data-algo="FCFS" onclick="selectCompareAlgo('A','FCFS',this)">FCFS</button>
+                <button class="algo-sel-btn" data-algo="SPN" onclick="selectCompareAlgo('A','SPN',this)">SPN</button>
+                <button class="algo-sel-btn" data-algo="SRTF" onclick="selectCompareAlgo('A','SRTF',this)">SRTF</button>
+                <button class="algo-sel-btn" data-algo="RR" onclick="selectCompareAlgo('A','RR',this)">RR</button>
+                <button class="algo-sel-btn" data-algo="Priority NP" onclick="selectCompareAlgo('A','Priority NP',this)">Pri·NP</button>
+                <button class="algo-sel-btn" data-algo="Priority P" onclick="selectCompareAlgo('A','Priority P',this)">Pri·P</button>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Algorithm B</div>
+              <div class="algo-selector" id="algoSelectorB">
+                <button class="algo-sel-btn" data-algo="FCFS" onclick="selectCompareAlgo('B','FCFS',this)">FCFS</button>
+                <button class="algo-sel-btn" data-algo="SPN" onclick="selectCompareAlgo('B','SPN',this)">SPN</button>
+                <button class="algo-sel-btn active" data-algo="SRTF" onclick="selectCompareAlgo('B','SRTF',this)">SRTF</button>
+                <button class="algo-sel-btn" data-algo="RR" onclick="selectCompareAlgo('B','RR',this)">RR</button>
+                <button class="algo-sel-btn" data-algo="Priority NP" onclick="selectCompareAlgo('B','Priority NP',this)">Pri·NP</button>
+                <button class="algo-sel-btn" data-algo="Priority P" onclick="selectCompareAlgo('B','Priority P',this)">Pri·P</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Process table -->
+        <div class="sim-card" style="margin-top:16px">
+          <div class="sim-card-title">Process Table</div>
+          <div class="process-table-wrap">
+            <table class="process-table" id="processTable">
+              <tr><th>PID</th><th>Arrival</th><th>Burst</th><th>Priority</th><th></th></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="sim-controls">
+          <div class="control-group">
+            <span class="control-label">RR Quantum</span>
+            <input type="number" class="control-input" id="quantum" value="2" min="1">
+          </div>
+          <button class="run-btn" id="runBtn" onclick="runScheduler()" disabled>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M8 5l12 7-12 7V5z"/></svg>
+            Execute Scheduler
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL: Results -->
+      <div>
+        <div id="resultsSection" class="hidden">
+
+          <!-- ALL MODE results -->
+          <div id="allResults">
+            <div class="results-header">
+              <div class="results-title" id="resultsHeading">Results Summary</div>
+              <div class="results-meta" id="resultsMeta"></div>
+            </div>
+
+            <div class="sim-card" id="summaryCard">
+              <div class="summary-layout">
+                <div>
+                  <table class="summary-table" id="summaryTable">
+                    <tr><th>Algorithm</th><th>Avg WT</th><th>Avg TAT</th><th>Avg RT</th><th>Throughput</th><th>CPU Util</th></tr>
+                  </table>
+                  <div id="viewAlgorithmsBtn" class="view-algo-link">
+                    View Detailed Results
+                    <span class="arrow">→</span>
+                  </div>
+                </div>
+                <div id="bestText"></div>
+              </div>
+            </div>
+
+            <div id="algorithmsBlock" class="algo-hidden">
+              <div class="results-header">
+                <div class="results-title" id="algorithmsHeading">Algorithm Detail</div>
+              </div>
+              <div class="algo-bar" id="algoButtons"></div>
+              <div class="sim-card" id="details">
+                <div class="empty-state">
+                  <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14l3-3 3 2 4-6" stroke-linecap="round"/></svg>
+                  <p>Select an algorithm above to view its Gantt chart and metrics</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SINGLE MODE results -->
+          <div id="singleResults" class="hidden">
+            <div class="results-header">
+              <div class="results-title" id="singleHeading">Algorithm Results</div>
+            </div>
+            <div class="sim-card" id="singleDetails"></div>
+          </div>
+
+          <!-- COMPARE2 MODE results -->
+          <div id="compare2Results" class="hidden">
+            <div class="results-header">
+              <div class="results-title" id="compare2Heading">Head-to-Head Comparison</div>
+            </div>
+            <div class="compare-layout" id="compareLayout"></div>
+          </div>
+
+        </div>
+
+        <!-- Empty state before first run -->
+        <div id="emptyState" class="sim-card" style="text-align:center;padding:60px 32px">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1" style="opacity:0.2;margin:0 auto 20px;display:block"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke-linecap="round"/></svg>
+          <div style="font-size:18px;font-weight:700;color:var(--text2);margin-bottom:8px">No results yet</div>
+          <div style="font-size:14px;color:var(--text3)">Add at least 2 processes and click <strong style="color:var(--blue2)">Execute Scheduler</strong></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-<!-- RESULTS SECTION (HIDDEN INITIALLY) -->
-<div id="resultsSection" class="hidden">
-
-  <h2 id="resultsHeading">Results Summary</h2>
-  <div id="summaryTable" class="card"></div>
-
- <div id="algorithmsBlock" class="algo-hidden">
-
-  <h2 id="algorithmsHeading">Algorithms</h2>
-
-  <div id="algoButtons" class="algo-bar"></div>
-
-  <div id="details" class="card"></div>
-
-</div>
-
-</div>
-  <!-- Modal -->
-<div id="processModal" class="modal hidden">
-
-  <div class="modal-content split-modal">
-
-    <!-- LEFT PANEL -->
-    <div class="modal-left">
-      <div class="modal-brand">
-        <h2>CPU Scheduler</h2>
-        <p>
-          Simulate scheduling algorithms
-          and compare performance.
-        </p>
-      </div>
-
-      <div class="modal-big-text">
-        Plan.<br>
-        Simulate.<br>
-        Analyze.
-      </div>
-    </div>
-
-    <!-- RIGHT PANEL -->
-    <div class="modal-right">
-
-      <h3>Add Process</h3>
-
-      <form id="processForm" autocomplete="off">
-
-      <div class="modal-grid">
-        <div>
-          <label>Arrival Time</label>
-          <input type="number" id="mArrival" min="0">
+  <!-- ADD PROCESS MODAL -->
+  <div id="processModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-left">
+        <div class="modal-brand">
+          <h2>CPU Scheduler</h2>
+          <p>Define a process with its arrival time, burst time, and priority for scheduling simulation.</p>
         </div>
-
-        <div>
-          <label>Burst Time</label>
-          <input type="number" id="mBurst" min="1">
-        </div>
-
-        <div style="grid-column:1 / -1;">
-          <label>Priority</label>
-          <input type="number" id="mPriority" min="1">
-        </div>
-
+        <div class="modal-big-text">Define.<br/>Simulate.<br/>Analyze.</div>
       </div>
-
-      <div id="modalError" class="modal-error hidden"></div>
-
-     <div class="modal-actions">
-
-  <div class="color-picker-wrap">
-    <div id="colorPreview" class="color-preview">
-      <input type="color" id="mColor" value="#3b82f6" aria-label="Pick color">
+      <div class="modal-right">
+        <h3 id="modalTitle">Add Process</h3>
+        <div class="modal-grid">
+          <div>
+            <label>Arrival Time</label>
+            <input type="number" id="mArrival" min="0" placeholder="e.g. 0">
+          </div>
+          <div>
+            <label>Burst Time</label>
+            <input type="number" id="mBurst" min="1" placeholder="e.g. 5">
+          </div>
+          <div>
+            <label>Priority <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(lower = higher priority)</span></label>
+            <input type="number" id="mPriority" min="1" placeholder="e.g. 1">
+          </div>
+        </div>
+        <div id="modalError" class="modal-error hidden"></div>
+        <div class="modal-actions">
+          <div class="color-preview" id="colorPreview">
+            <input type="color" id="mColor" value="#3b82f6" aria-label="Process color">
+          </div>
+          <button class="btn btn-ghost" onclick="closeModal()">Discard</button>
+          <button class="btn btn-primary" onclick="addProcess()">Save Process</button>
+        </div>
+      </div>
     </div>
   </div>
-
-  <button type="button" class="primary" onclick="addProcess()">Submit</button>
-  <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
-
-</div>
-       </form>
-    </div>
-
-  </div>
-
-</div>
-  
 
   <script src="/static/script.js"></script>
   <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/static/service-worker.js")
-    .then(() => console.log("Service Worker Registered"));
-}
-</script>
+    if ("serviceWorker" in navigator) navigator.serviceWorker.register("/static/service-worker.js").catch(()=>{});
+  </script>
 </body>
 </html>
