@@ -582,7 +582,6 @@ function buildSummary() {
         + '</div>';
     }
 
-    const pillClass = isBest ? "rank-pill rank-pill-best" : "rank-pill";
     const badgeHTML = isBest
       ? '<span class="best-badge">&#9733; Best</span>'
       : '<span class="rank-badge rank-hidden">Rank ' + curRank + '</span>';
@@ -591,7 +590,6 @@ function buildSummary() {
     if (isBest) tr.className = "best-row";
     tr.innerHTML =
       '<td class="algo-name-cell">'
-        + '<span class="' + pillClass + '" title="Rank ' + curRank + '">#' + curRank + '</span>'
         + '<span class="algo-label">' + name + '</span>'
         + badgeHTML
       + '</td>'
