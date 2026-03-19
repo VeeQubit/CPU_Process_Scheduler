@@ -1,5 +1,3 @@
-
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -1351,15 +1349,15 @@ a { color: inherit; text-decoration: none; }
   width: 100%; border-collapse: separate; border-spacing: 0 6px; table-layout: fixed;
 }
 .summary-table thead th {
-  text-align: left; padding: 10px 16px;
-  font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  text-align: left; padding: 12px 16px;
+  font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--text3); background: var(--bg2); white-space: nowrap;
 }
 .summary-table thead th:first-child { border-radius: 8px 0 0 8px; width: 28%; }
 .summary-table thead th:last-child  { border-radius: 0 8px 8px 0; }
 .summary-table tbody tr td {
-  padding: 13px 16px; background: var(--surface2);
-  font-size: 13px; color: var(--text2); border: none;
+  padding: 15px 16px; background: var(--surface2);
+  font-size: 15px; color: var(--text2); border: none;
   font-family: var(--font-mono); opacity: 0; transform: translateY(6px);
   transition: background 0.2s;
 }
@@ -1373,8 +1371,15 @@ a { color: inherit; text-decoration: none; }
 @keyframes rowSlide { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
 
 /* ── Best row highlight ── */
-.best-row td { background: rgba(16,185,129,0.06) !important; }
-.best-row td:first-child { border-left: 3px solid rgba(16,185,129,0.6); border-radius: 8px 0 0 8px; }
+.best-row td {
+  background: rgba(16,185,129,0.10) !important;
+  font-weight: 600;
+}
+.best-row td:first-child {
+  border-left: 4px solid rgba(16,185,129,0.85);
+  border-radius: 8px 0 0 8px;
+  box-shadow: -6px 0 20px rgba(16,185,129,0.15);
+}
 .best-show { opacity: 1 !important; }
 @keyframes bestGlow { 0%,100% { background: rgba(16,185,129,0.06); } 50% { background: rgba(16,185,129,0.16); } }
 .best-pulse td { animation: bestGlow 0.65s ease; }
@@ -1399,9 +1404,37 @@ a { color: inherit; text-decoration: none; }
   color: #6ee7b7; background: rgba(16,185,129,0.13); border: 1px solid rgba(16,185,129,0.35);
   font-family: var(--font-body);
 }
-/* old rank-badge kept for compat, now hidden */
-.rank-badge { display: none; }
-.rank-show  {}
+/* rank-badge for non-best rows — shown with animation */
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: var(--font-body);
+  color: var(--text3);
+  background: rgba(148,163,184,0.10);
+  border: 1px solid rgba(148,163,184,0.20);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.rank-badge.rank-show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.rank-hidden {
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.rank-hidden.rank-show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ── Score bar cells ── */
 .score-cell { display: flex; align-items: center; gap: 8px; }
@@ -1758,46 +1791,49 @@ a { color: inherit; text-decoration: none; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
+  min-width: 34px;
   height: 24px;
+  padding: 0 8px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  background: rgba(148,163,184,0.12);
-  border: 1px solid rgba(148,163,184,0.22);
-  color: #94a3b8;
+  font-family: var(--font-mono, monospace);
+  background: rgba(148,163,184,0.10);
+  border: 1px solid rgba(148,163,184,0.20);
+  color: var(--text3);
   flex-shrink: 0;
   margin-right: 8px;
-  font-family: var(--font-mono, monospace);
-  transition: all 0.2s ease;
 }
 .rank-pill-best {
-  background: rgba(96,165,250,0.15);
-  border-color: rgba(96,165,250,0.4);
-  color: #60a5fa;
+  background: rgba(16,185,129,0.15);
+  border-color: rgba(16,185,129,0.5);
+  color: #6ee7b7;
+  font-size: 13px;
 }
 
 /* Algorithm name cell alignment */
 .algo-name-cell {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   white-space: nowrap;
 }
 .algo-label {
   font-weight: 700;
+  font-size: 15px;
   color: var(--text, #e5e7eb);
   margin-right: 6px;
 }
 
 /* Score value left-aligned and monospace */
 .score-val {
-  min-width: 42px;
-  font-size: 12px;
+  min-width: 44px;
+  font-size: 14px;
   font-family: var(--font-mono, monospace);
   color: var(--text2, #cbd5e1);
   flex-shrink: 0;
+  text-align: right;
 }
 .score-cell {
   display: flex;
@@ -1835,52 +1871,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 2px 8px rgba(79,70,229,0.4);
 }
 
-/* ── Rank pill (professional #1 #2 style, no medals) ── */
-.rank-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  height: 22px;
-  padding: 0 6px;
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  font-family: var(--font-mono, monospace);
-  background: rgba(148,163,184,0.12);
-  border: 1px solid rgba(148,163,184,0.22);
-  color: #94a3b8;
-  flex-shrink: 0;
-  margin-right: 8px;
-}
-.rank-pill-best {
-  background: rgba(96,165,250,0.15);
-  border-color: rgba(96,165,250,0.4);
-  color: #60a5fa;
-}
 
-/* ── Algorithm name cell ── */
-.algo-name-cell {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-}
-.algo-label {
-  font-weight: 700;
-  color: var(--text, #e5e7eb);
-  margin-right: 8px;
-}
-
-/* ── Score cell value ── */
-.score-val {
-  min-width: 40px;
-  font-size: 12px;
-  font-family: var(--font-mono, monospace);
-  color: var(--text2, #cbd5e1);
-  flex-shrink: 0;
-  text-align: right;
-}
 
 /* ── Reason block: numbered circles ── */
 .best-reason-block {

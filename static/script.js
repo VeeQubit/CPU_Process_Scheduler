@@ -689,14 +689,15 @@ async function scrollToAlgorithms() {
 
   // Build tabs — ALL algorithms, best gets special style + rank pip
   const ranked = getRankedAlgos();
-  tabBar.innerHTML = ranked.map(({ name }, i) => {
+  let tabPrevM = null, tabRank = 1;
+  tabBar.innerHTML = ranked.map(function({ name, m }, i) {
+    if (!tabPrevM || anyDiff(m, tabPrevM)) tabRank = i + 1;
+    tabPrevM = m;
     const isBest = bestAlgos.includes(name);
-    const rank   = i + 1;
-    const pip    = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
-    return `<button class="algo-btn ${isBest ? "algo-best" : ""}"
-      onclick="showDetails('${name}');setActiveTab('${name}')">
-      <span class="btn-rank-pip">${pip}</span>${name}
-    </button>`;
+    return '<button class="algo-btn ' + (isBest ? "algo-best" : "") + '"'
+      + ' onclick="showDetails(\'' + name + '\');setActiveTab(\'' + name + '\')">'
+      + '<span class="btn-rank-pip">#' + tabRank + '</span>' + name
+      + '</button>';
   }).join("");
 
   // Measure height before showing
@@ -725,7 +726,7 @@ function showDetails(algo) {
 }
 function setActiveTab(algo) {
   document.querySelectorAll(".algo-btn").forEach(b => b.classList.remove("algo-active"));
-  const t = [...document.querySelectorAll(".algo-btn")].find(b => b.textContent.replace(/[🥇🥈🥉#\d]/g,'').trim() === algo);
+  const t = [...document.querySelectorAll(".algo-btn")].find(b => b.textContent.replace(/[#\d]/g,'').trim() === algo);
   if (t) t.classList.add("algo-active");
 }
 
