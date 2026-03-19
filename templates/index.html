@@ -200,24 +200,26 @@
           <!-- Summary comparison table + best card -->
           <div class="results-section">
             <div class="results-section-label">Performance Comparison</div>
-            <div class="summary-layout">
-              <div id="bestText"></div>
-              <div class="summary-table-wrap">
-                <table class="summary-table" id="summaryTable">
-                  <thead><tr>
-                    <th style="width:30%">Algorithm</th>
-                    <th>Avg Wait ↓</th>
-                    <th>Avg TAT ↓</th>
-                    <th>Avg Response ↓</th>
-                    <th>Throughput ↑</th>
-                    <th>CPU Util ↑</th>
-                  </tr></thead>
-                  <tbody id="summaryBody"></tbody>
-                </table>
-                <div id="viewAlgorithmsBtn" class="view-algo-link" onclick="scrollToAlgorithms()">
-                  View Detailed Gantt Charts per Algorithm
-                  <span class="arrow">→</span>
-                </div>
+            <!-- Table first -->
+            <div class="summary-table-wrap">
+              <table class="summary-table" id="summaryTable">
+                <thead><tr>
+                  <th style="width:28%">Algorithm</th>
+                  <th>Avg Wait ↓</th>
+                  <th>Avg TAT ↓</th>
+                  <th>Avg Response ↓</th>
+                  <th>Throughput ↑</th>
+                  <th>CPU Util ↑</th>
+                </tr></thead>
+                <tbody id="summaryBody"></tbody>
+              </table>
+            </div>
+            <!-- Best card below table -->
+            <div id="bestText" style="margin-top:20px"></div>
+            <div style="margin-top:16px">
+              <div id="viewAlgorithmsBtn" class="view-algo-link" onclick="scrollToAlgorithms()">
+                View Detailed Gantt Charts per Algorithm
+                <span class="arrow">→</span>
               </div>
             </div>
           </div>
