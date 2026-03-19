@@ -601,10 +601,6 @@ function buildSummary() {
       + '<td>' + bar(thrPct, m.throughput.toFixed(2))           + '</td>'
       + '<td>' + bar(cpuPct, (m.cpu_util*100).toFixed(1) + '%') + '</td>';
 
-    tr.querySelectorAll("td").forEach(function(td) {
-      td.style.opacity   = "0";
-      td.style.transform = "translateY(6px)";
-    });
     tbody.appendChild(tr);
   });
 
@@ -764,7 +760,7 @@ function renderCompare2Result() {
     const col  = document.createElement("div");
     const card = document.createElement("div");
     card.className = "results-detail-card";
-    col.innerHTML  = `<div style="font-size:12px;font-weight:800;font-family:var(--font-mono);color:${colorVar};margin-bottom:12px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:${colorVar}"></div>${algo} <span style="color:var(--text3);font-weight:400;font-size:11px">— ${FULL_NAMES[algo]}</span></div>`;
+    col.innerHTML  = `<div style="font-size:12px;font-weight:800;font-family:var(--font-mono);color:${colorVar};margin-bottom:12px;display:flex;align-items:center;gap:8px;overflow:hidden"><div style="width:8px;height:8px;border-radius:50%;flex-shrink:0;background:${colorVar}"></div><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${algo}</span><span style="color:var(--text3);font-weight:400;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"> — ${FULL_NAMES[algo]}</span></div>`;
     col.appendChild(card);
     return { col, card };
   };
