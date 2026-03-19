@@ -1,5 +1,3 @@
-
-
 const FULL_NAMES = {
   "FCFS":        "First Come First Serve",
   "SPN":         "Shortest Process Next",
@@ -674,4 +672,286 @@ function buildBestCardHTML(bm) {
   + '</div>';
 }
 
+async function scrollToAlgorithms() {
+  if (algorithmsStarted) return;
+  algorithmsStarted = true;
 
+  const viewBtn = document.getElementById("viewAlgorithmsBtn");
+  const block   = document.getElementById("algorithmsBlock");
+  const heading = document.getElementById("algorithmsHeading");
+  const tabBar  = document.getElementById("algoButtons");
+  const detEl   = document.getElementById("details");
+
+  if (viewBtn) viewBtn.style.display = "none";
+  block.classList.remove("algo-hidden");
+  block.style.visibility = "hidden";
+  tabBar.style.opacity = "0";
+
+  // Build tabs — ALL algorithms, best gets special style + rank pip
+  const ranked = getRankedAlgos();
+  tabBar.innerHTML = ranked.map(({ name }, i) => {
+    const isBest = bestAlgos.includes(name);
+    const rank   = i + 1;
+    const pip    = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+    return `<button class="algo-btn ${isBest ? "algo-best" : ""}"
+      onclick="showDetails('${name}');setActiveTab('${name}')">
+      <span class="btn-rank-pip">${pip}</span>${name}
+    </button>`;
+  }).join("");
+
+  // Measure height before showing
+  renderDetailContent(detEl, bestAlgos[0] || Object.keys(globalResults)[0], false);
+  await new Promise(r => requestAnimationFrame(r));
+  await new Promise(r => requestAnimationFrame(r));
+  detEl.style.minHeight = detEl.offsetHeight + "px";
+  detEl.innerHTML = `<div class="results-empty" style="padding:48px 0">
+    <div class="results-empty-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14l3-3 3 2 4-6" stroke-linecap="round"/></svg></div>
+    <div>Select an algorithm tab above</div></div>`;
+
+  block.scrollIntoView({ behavior: "smooth", block: "start" });
+  await waitScrollEnd();
+
+  block.style.visibility = "visible";
+  await animateLetters(heading, 65);
+
+  tabBar.style.opacity = "1";
+  const tabs = tabBar.querySelectorAll(".algo-btn");
+  tabs.forEach((b, i) => setTimeout(() => b.classList.add("btn-show"), i * 60));
+  await sleep(tabs.length * 60 + 200);
+}
+
+function showDetails(algo) {
+  renderDetailContent(document.getElementById("details"), algo, animEnabled);
+}
+function setActiveTab(algo) {
+  document.querySelectorAll(".algo-btn").forEach(b => b.classList.remove("algo-active"));
+  const t = [...document.querySelectorAll(".algo-btn")].find(b => b.textContent.replace(/[🥇🥈🥉#\d]/g,'').trim() === algo);
+  if (t) t.classList.add("algo-active");
+}
+
+// ══════════════════════════════════════════════════════════
+//  SINGLE MODE
+// ══════════════════════════════════════════════════════════
+function renderSingleResult() {
+  document.getElementById("allResults").classList.add("hidden");
+  document.getElementById("singleResults").classList.remove("hidden");
+  document.getElementById("compare2Results").classList.add("hidden");
+
+  const algo = selectedSingleAlgo;
+  document.getElementById("resultsHeading").textContent = `${algo} — ${FULL_NAMES[algo]}`;
+  document.getElementById("resultsMeta").textContent = `${processes.length} processes`;
+
+  renderDetailContent(document.getElementById("singleDetails"), algo, animEnabled);
+}
+
+// ══════════════════════════════════════════════════════════
+//  COMPARE2 MODE
+// ══════════════════════════════════════════════════════════
+function renderCompare2Result() {
+  document.getElementById("allResults").classList.add("hidden");
+  document.getElementById("singleResults").classList.add("hidden");
+  document.getElementById("compare2Results").classList.remove("hidden");
+
+  const algoA = selectedCompareA, algoB = selectedCompareB;
+  document.getElementById("resultsHeading").textContent = `${algoA} vs ${algoB}`;
+  document.getElementById("resultsMeta").textContent = "Head-to-Head Comparison";
+
+  const layout = document.getElementById("compareLayout");
+  layout.innerHTML = "";
+
+  const mkCol = (algo, colorVar) => {
+    const col  = document.createElement("div");
+    const card = document.createElement("div");
+    card.className = "results-detail-card";
+    col.innerHTML  = `<div style="font-size:12px;font-weight:800;font-family:var(--font-mono);color:${colorVar};margin-bottom:12px;display:flex;align-items:center;gap:8px"><div style="width:8px;height:8px;border-radius:50%;background:${colorVar}"></div>${algo} <span style="color:var(--text3);font-weight:400;font-size:11px">— ${FULL_NAMES[algo]}</span></div>`;
+    col.appendChild(card);
+    return { col, card };
+  };
+
+  const { col: colA, card: cardA } = mkCol(algoA, "#60a5fa");
+  const { col: colB, card: cardB } = mkCol(algoB, "#c4b5fd");
+  layout.appendChild(colA);
+  layout.appendChild(colB);
+
+  renderDetailContent(cardA, algoA, animEnabled);
+  setTimeout(() => renderDetailContent(cardB, algoB, animEnabled), 200);
+
+  // Diff table
+  const diffWrap = document.createElement("div");
+  diffWrap.style.gridColumn = "1/-1";
+  diffWrap.innerHTML = buildDiffTable(algoA, algoB);
+  layout.appendChild(diffWrap);
+}
+
+function buildDiffTable(a, b) {
+  const ma = globalResults[a].metrics, mb = globalResults[b].metrics;
+  const rows = [
+    { label: "Avg Waiting Time",    va: ma.avg_wt,    vb: mb.avg_wt,    lower: true  },
+    { label: "Avg Turnaround Time", va: ma.avg_tat,   vb: mb.avg_tat,   lower: true  },
+    { label: "Avg Response Time",   va: ma.avg_rt,    vb: mb.avg_rt,    lower: true  },
+    { label: "CPU Utilization",     va: ma.cpu_util,  vb: mb.cpu_util,  lower: false, pct: true },
+    { label: "Throughput",          va: ma.throughput,vb: mb.throughput,lower: false },
+  ];
+  const body = rows.map(r => {
+    const aWins = r.lower ? r.va < r.vb : r.va > r.vb;
+    const bWins = r.lower ? r.vb < r.va : r.vb > r.va;
+    const fmt   = v => r.pct ? (v*100).toFixed(1)+"%" : v.toFixed(2);
+    const diff  = Math.abs(r.va - r.vb);
+    return `<tr>
+      <td style="color:var(--text2)">${r.label}</td>
+      <td style="font-family:var(--font-mono)">${fmt(r.va)}${aWins ? '<span class="diff-badge diff-better">✓</span>' : ''}</td>
+      <td style="font-family:var(--font-mono)">${fmt(r.vb)}${bWins ? '<span class="diff-badge diff-better">✓</span>' : ''}</td>
+      <td style="font-family:var(--font-mono);color:var(--text3);font-size:12px">${r.pct ? (diff*100).toFixed(1)+"%" : diff.toFixed(2)}</td>
+    </tr>`;
+  }).join("");
+  return `<div class="results-detail-card" style="margin-top:0">
+    <div class="results-section-label">Metric Comparison</div>
+    <table class="result-table">
+      <thead><tr><th>Metric</th><th style="color:#93c5fd">${a}</th><th style="color:#c4b5fd">${b}</th><th>Difference</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════
+//  DETAIL RENDERER (shared)
+// ══════════════════════════════════════════════════════════
+function renderDetailContent(container, algo, animate) {
+  const data    = globalResults[algo];
+  const gantt   = data.gantt;
+  const table   = data.table;
+  const metrics = data.metrics;
+  const rank    = getRank(algo);
+  const id      = algo.replace(/[^a-zA-Z0-9]/g, "_");
+
+  container.innerHTML = `
+    <div class="gantt-header">
+      <div class="gantt-title"><span class="gantt-dot"></span>Gantt Chart — ${algo}</div>
+    </div>
+    <div class="gantt-wrap"><div class="gantt" id="gantt_${id}"></div></div>
+
+    <div class="result-layout">
+      <div id="tbl_${id}" class="table-hidden">
+        <table class="result-table">
+          <thead><tr><th>PID</th><th>Arrival</th><th>Burst</th><th>Response</th><th>Waiting</th><th>Turnaround</th></tr></thead>
+          <tbody>
+            ${table.map(p => `<tr>
+              <td><span class="pid-badge" style="background:${getColor(p.pid)}">${p.pid}</span></td>
+              <td>${p.arrival}</td><td>${p.burst}</td><td>${p.rt}</td><td>${p.wt}</td><td>${p.tat}</td>
+            </tr>`).join("")}
+          </tbody>
+        </table>
+      </div>
+      <div id="stats_${id}" class="stats-section">
+        <div class="stat-box"><div class="stat-label-text">Rank</div><div class="stat-val rank-val">#${rank}</div></div>
+        <div class="stat-box"><div class="stat-label-text">Avg Waiting</div><div class="stat-val">${metrics.avg_wt.toFixed(2)}</div></div>
+        <div class="stat-box"><div class="stat-label-text">Avg Turnaround</div><div class="stat-val">${metrics.avg_tat.toFixed(2)}</div></div>
+        <div class="stat-box"><div class="stat-label-text">Avg Response</div><div class="stat-val">${metrics.avg_rt.toFixed(2)}</div></div>
+        <div class="stat-box"><div class="stat-label-text">Throughput</div><div class="stat-val">${metrics.throughput.toFixed(2)}</div></div>
+        <div class="stat-box"><div class="stat-label-text">CPU Utilization</div><div class="stat-val">${(metrics.cpu_util*100).toFixed(1)}%</div></div>
+      </div>
+    </div>`;
+
+  if (!gantt?.length) return;
+
+  const ganttDiv      = document.getElementById(`gantt_${id}`);
+  const tblEl         = document.getElementById(`tbl_${id}`);
+  const statsEl       = document.getElementById(`stats_${id}`);
+  const totalStart    = gantt[0][1];
+  const totalEnd      = gantt[gantt.length-1][2];
+  const totalTimeline = totalEnd - totalStart;
+  const ANIM = animate ? 4000 : 0;
+
+  gantt.forEach(([pid, start, end]) => {
+    const width = end - start;
+    const block = document.createElement("div");
+    block.className = "block";
+    block.style.backgroundColor = pid === "Idle" ? "#374151" : getColor(pid);
+    block.style.flex = width;
+    block.innerHTML  = `<div>${pid}</div><small>${start}–${end}</small>`;
+    if (animate) {
+      block.style.transformOrigin = "left";
+      block.style.transform       = "scaleX(0)";
+      block.style.opacity         = "0";
+      const dur   = (width / totalTimeline) * ANIM;
+      const delay = ((start - totalStart) / totalTimeline) * ANIM;
+      setTimeout(() => {
+        block.style.transition = `transform ${dur}ms cubic-bezier(.2,.9,.2,1), opacity 350ms ease`;
+        block.style.transform  = "scaleX(1)";
+        block.style.opacity    = "1";
+      }, delay);
+    }
+    ganttDiv.appendChild(block);
+  });
+
+  setTimeout(() => { tblEl.classList.remove("table-hidden"); tblEl.classList.add("table-show"); }, ANIM + 120);
+  setTimeout(() => { statsEl.classList.add("stats-show"); statsEl.style.opacity = "1"; statsEl.style.transform = "translateX(0)"; }, ANIM + 620);
+}
+
+// ══════════════════════════════════════════════════════════
+//  ANIMATION HELPERS
+// ══════════════════════════════════════════════════════════
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function waitScrollEnd(timeout = 900) {
+  return new Promise(resolve => {
+    let last = window.scrollY, same = 0, t = performance.now();
+    const check = () => {
+      const y = window.scrollY;
+      if (Math.abs(y - last) < 1) same++;
+      else same = 0;
+      last = y;
+      if (same >= 5 || performance.now() - t > timeout) { resolve(); return; }
+      requestAnimationFrame(check);
+    };
+    requestAnimationFrame(check);
+  });
+}
+
+function animateLetters(el, delay = 50) {
+  if (!el) return Promise.resolve();
+  const text = el.getAttribute("data-text") || el.textContent;
+  el.setAttribute("data-text", text);
+  el.textContent = "";
+  el.classList.add("typewriter");
+  const frag = document.createDocumentFragment();
+  [...text].forEach((ch, i) => {
+    const span = document.createElement("span");
+    span.textContent = ch === " " ? "\u00A0" : ch;
+    span.style.animationDelay = `${i * delay}ms`;
+    frag.appendChild(span);
+  });
+  el.appendChild(frag);
+  return sleep(text.length * delay + 220);
+}
+
+async function animateTableRows(tbody, rowDelay = 200) {
+  for (const r of Array.from(tbody.querySelectorAll("tr"))) {
+    r.classList.add("row-reveal");
+    await sleep(rowDelay);
+  }
+}
+
+async function animateBestRows(tbody, pulseDelay = 600) {
+  for (const r of Array.from(tbody.querySelectorAll("tr.best-row"))) {
+    r.querySelectorAll("td").forEach(td => td.classList.add("best-show"));
+    r.classList.add("best-pulse");
+    await sleep(pulseDelay);
+    r.classList.remove("best-pulse");
+  }
+}
+
+async function animateRankBadges(tbody, delay = 170) {
+  for (const b of Array.from(tbody.querySelectorAll(".rank-badge"))) {
+    b.classList.add("rank-show");
+    await sleep(delay);
+  }
+}
+
+async function revealCard(card) {
+  if (!card) return;
+  await new Promise(r => requestAnimationFrame(r));
+  await new Promise(r => requestAnimationFrame(r));
+  card.classList.add("best-show");
+  await sleep(600);
+}
