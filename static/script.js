@@ -566,7 +566,7 @@ function buildSummary() {
 
   let prevM = null, curRank = 1;
 
-  ranked.forEach(({ name, m }, i) => {
+  ranked.forEach(function({ name, m }, i) {
     if (!prevM || anyDiff(m, prevM)) curRank = i + 1;
     prevM = m;
     const isBest = bestAlgos.includes(name);
@@ -577,46 +577,53 @@ function buildSummary() {
     const thrPct = maxThr > 0 ? (m.throughput / maxThr * 100).toFixed(0) : 100;
     const cpuPct = (m.cpu_util * 100).toFixed(0);
 
-    const bar = (pct, label) =>
-      `<div class="score-cell">
-        <span class="score-val">${label}</span>
-        <div class="score-bar-wrap"><div class="score-bar" style="width:${pct}%"></div></div>
-      </div>`;
+    function bar(pct, label) {
+      return '<div class="score-cell">'
+        + '<span class="score-val">' + label + '</span>'
+        + '<div class="score-bar-wrap"><div class="score-bar" style="width:' + pct + '%"></div></div>'
+        + '</div>';
+    }
+
+    const pillClass = isBest ? "rank-pill rank-pill-best" : "rank-pill";
+    const badgeHTML = isBest
+      ? '<span class="best-badge">&#9733; Best</span>'
+      : '<span class="rank-badge rank-hidden">Rank ' + curRank + '</span>';
 
     const tr = document.createElement("tr");
     if (isBest) tr.className = "best-row";
-    tr.innerHTML = `
-      <td class="algo-name-cell">
-        <span class="rank-pill ${isBest ? "rank-pill-best" : ""}" title="Rank ${curRank}">#${curRank}</span>
-        <span class="algo-label">${name}</span>
-        ${isBest
-          ? '<span class="best-badge">★ Best</span>'
-          : `<span class="rank-badge rank-hidden">Rank ${curRank}</span>`
-        }
-      </td>
-      <td>${bar(wtPct,  m.avg_wt.toFixed(2))}</td>
-      <td>${bar(tatPct, m.avg_tat.toFixed(2))}</td>
-      <td>${bar(rtPct,  m.avg_rt.toFixed(2))}</td>
-      <td>${bar(thrPct, m.throughput.toFixed(2))}</td>
-      <td>${bar(cpuPct, (m.cpu_util*100).toFixed(1)+"%")}</td>`;
-    tr.querySelectorAll("td").forEach(td => { td.style.opacity="0"; td.style.transform="translateY(6px)"; });
+    tr.innerHTML =
+      '<td class="algo-name-cell">'
+        + '<span class="' + pillClass + '" title="Rank ' + curRank + '">#' + curRank + '</span>'
+        + '<span class="algo-label">' + name + '</span>'
+        + badgeHTML
+      + '</td>'
+      + '<td>' + bar(wtPct,  m.avg_wt.toFixed(2))               + '</td>'
+      + '<td>' + bar(tatPct, m.avg_tat.toFixed(2))              + '</td>'
+      + '<td>' + bar(rtPct,  m.avg_rt.toFixed(2))               + '</td>'
+      + '<td>' + bar(thrPct, m.throughput.toFixed(2))           + '</td>'
+      + '<td>' + bar(cpuPct, (m.cpu_util*100).toFixed(1) + '%') + '</td>';
+
+    tr.querySelectorAll("td").forEach(function(td) {
+      td.style.opacity   = "0";
+      td.style.transform = "translateY(6px)";
+    });
     tbody.appendChild(tr);
   });
 
-  // Best card only — KPI strip removed
+  // Best card only — no KPI strip
   const bm = globalResults[bestAlgos[0]].metrics;
   bestEl.innerHTML = buildBestCardHTML(bm);
   const card = bestEl.querySelector(".best-card");
   if (card) card.style.visibility = "hidden";
 
-  requestAnimationFrame(async () => {
+  requestAnimationFrame(async function() {
     await sleep(150);
     await animateLetters(document.getElementById("resultsHeading"), 55);
     await animateTableRows(tbody, 240);
     await animateBestRows(tbody, 650);
 
-    tbody.querySelectorAll(".rank-badge").forEach((el, i) => {
-      setTimeout(() => el.classList.add("rank-show"), i * 80);
+    tbody.querySelectorAll(".rank-badge").forEach(function(el, i) {
+      setTimeout(function() { el.classList.add("rank-show"); }, i * 80);
     });
 
     if (card) { card.style.visibility = "visible"; await revealCard(card); }
@@ -627,38 +634,44 @@ function buildSummary() {
 }
 
 function buildBestCardHTML(bm) {
-  const names = bestAlgos, isTie = names.length > 1;
+  const names  = bestAlgos;
+  const isTie  = names.length > 1;
   const titleHTML = isTie
-    ? `<div class="multi-title-list">${names.map(n => `<span class="algo-name">${n}</span>`).join("")}</div>`
+    ? '<div class="multi-title-list">' +
+        names.map(function(n) { return '<span class="algo-name">' + n + '</span>'; }).join("") +
+      '</div>'
     : FULL_NAMES[names[0]];
-  const codeHTML = isTie ? "" : `<div class="best-code">${names[0]}</div>`;
+  const codeHTML = isTie ? "" : '<div class="best-code">' + names[0] + '</div>';
+  const subText  = isTie ? "Multiple algorithms tied" : "Optimal Algorithm";
+  const cpu      = (bm.cpu_util * 100).toFixed(1);
 
-  return `<div class="best-card">
-    <div class="best-card-inner">
-      <div class="best-card-accent"></div>
-      <div class="best-card-body">
-        <div class="best-card-top">
-          <span class="best-chip">Best Overall</span>
-          <span class="best-sub">${isTie ? "Multiple algorithms tied" : "Optimal Algorithm"}</span>
-        </div>
-        <div class="best-title">${titleHTML}</div>
-        ${codeHTML}
-        <div class="best-reason-block">
-          <div class="reason-line"><span class="reason-rank">1</span><span>CPU Utilization: <strong>${(bm.cpu_util*100).toFixed(1)}%</strong></span></div>
-          <div class="reason-line"><span class="reason-rank">2</span><span>Throughput: <strong>${bm.throughput.toFixed(2)}</strong> processes/unit</span></div>
-          <div class="reason-line"><span class="reason-rank">3</span><span>Avg Turnaround Time: <strong>${bm.avg_tat.toFixed(2)}</strong></span></div>
-          <div class="reason-line"><span class="reason-rank">4</span><span>Avg Waiting Time: <strong>${bm.avg_wt.toFixed(2)}</strong></span></div>
-          <div class="reason-line"><span class="reason-rank">5</span><span>Avg Response Time: <strong>${bm.avg_rt.toFixed(2)}</strong></span></div>
-        </div>
-      </div>
-      <div class="best-card-metrics">
-        <div class="bm-item"><div class="bm-label">CPU Util</div><div class="bm-val good">${(bm.cpu_util*100).toFixed(1)}%</div></div>
-        <div class="bm-item"><div class="bm-label">Throughput</div><div class="bm-val good">${bm.throughput.toFixed(2)}</div></div>
-        <div class="bm-item"><div class="bm-label">Avg TAT</div><div class="bm-val">${bm.avg_tat.toFixed(2)}</div></div>
-        <div class="bm-item"><div class="bm-label">Avg WT</div><div class="bm-val">${bm.avg_wt.toFixed(2)}</div></div>
-        <div class="bm-item"><div class="bm-label">Avg RT</div><div class="bm-val">${bm.avg_rt.toFixed(2)}</div></div>
-      </div>
-    </div>
-  </div>`;
+  return '<div class="best-card" style="margin-top:20px">'
+    + '<div class="best-card-inner">'
+      + '<div class="best-card-accent"></div>'
+      + '<div class="best-card-body">'
+        + '<div class="best-card-top">'
+          + '<span class="best-chip">Best Overall</span>'
+          + '<span class="best-sub">' + subText + '</span>'
+        + '</div>'
+        + '<div class="best-title">' + titleHTML + '</div>'
+        + codeHTML
+        + '<div class="best-reason-block">'
+          + '<div class="reason-line"><span class="reason-rank">1</span><span>CPU Utilization: <strong>' + cpu + '%</strong></span></div>'
+          + '<div class="reason-line"><span class="reason-rank">2</span><span>Throughput: <strong>' + bm.throughput.toFixed(2) + '</strong> processes/unit</span></div>'
+          + '<div class="reason-line"><span class="reason-rank">3</span><span>Avg Turnaround Time: <strong>' + bm.avg_tat.toFixed(2) + '</strong></span></div>'
+          + '<div class="reason-line"><span class="reason-rank">4</span><span>Avg Waiting Time: <strong>' + bm.avg_wt.toFixed(2) + '</strong></span></div>'
+          + '<div class="reason-line"><span class="reason-rank">5</span><span>Avg Response Time: <strong>' + bm.avg_rt.toFixed(2) + '</strong></span></div>'
+        + '</div>'
+      + '</div>'
+      + '<div class="best-card-metrics">'
+        + '<div class="bm-item"><div class="bm-label">CPU Util</div><div class="bm-val good">' + cpu + '%</div></div>'
+        + '<div class="bm-item"><div class="bm-label">Throughput</div><div class="bm-val good">' + bm.throughput.toFixed(2) + '</div></div>'
+        + '<div class="bm-item"><div class="bm-label">Avg TAT</div><div class="bm-val">' + bm.avg_tat.toFixed(2) + '</div></div>'
+        + '<div class="bm-item"><div class="bm-label">Avg WT</div><div class="bm-val">' + bm.avg_wt.toFixed(2) + '</div></div>'
+        + '<div class="bm-item"><div class="bm-label">Avg RT</div><div class="bm-val">' + bm.avg_rt.toFixed(2) + '</div></div>'
+      + '</div>'
+    + '</div>'
+  + '</div>';
 }
+
 
