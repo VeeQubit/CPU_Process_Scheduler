@@ -1,6 +1,4 @@
-/* ============================================================
-   CPU SCHEDULER — script.js
-   ============================================================ */
+
 
 const FULL_NAMES = {
   "FCFS":        "First Come First Serve",
@@ -528,32 +526,86 @@ function anyDiff(a, b) {
          a.avg_tat  !== b.avg_tat  || a.avg_wt     !== b.avg_wt    || a.avg_rt !== b.avg_rt;
 }
 
+// ── KPI strip: who wins each individual metric ──────────────
+function buildKpiStrip() {
+  const ranked = getRankedAlgos();
+  const allNames = Object.keys(globalResults);
+  // Find per-metric winners
+  const bestWt  = allNames.reduce((a,b) => globalResults[a].metrics.avg_wt  <= globalResults[b].metrics.avg_wt  ? a : b);
+  const bestTat = allNames.reduce((a,b) => globalResults[a].metrics.avg_tat <= globalResults[b].metrics.avg_tat ? a : b);
+  const bestRt  = allNames.reduce((a,b) => globalResults[a].metrics.avg_rt  <= globalResults[b].metrics.avg_rt  ? a : b);
+  const bestThr = allNames.reduce((a,b) => globalResults[a].metrics.throughput >= globalResults[b].metrics.throughput ? a : b);
+  const bestCpu = allNames.reduce((a,b) => globalResults[a].metrics.cpu_util   >= globalResults[b].metrics.cpu_util   ? a : b);
+
+  const kpis = [
+    { label: "Avg Wait Time",    winner: bestWt,  val: globalResults[bestWt].metrics.avg_wt.toFixed(2),              color: "#60a5fa", suffix: "" },
+    { label: "Avg Turnaround",   winner: bestTat, val: globalResults[bestTat].metrics.avg_tat.toFixed(2),            color: "#a78bfa", suffix: "" },
+    { label: "Avg Response",     winner: bestRt,  val: globalResults[bestRt].metrics.avg_rt.toFixed(2),              color: "#22d3ee", suffix: "" },
+    { label: "Throughput",       winner: bestThr, val: globalResults[bestThr].metrics.throughput.toFixed(2),         color: "#34d399", suffix: "/t" },
+    { label: "CPU Utilization",  winner: bestCpu, val: (globalResults[bestCpu].metrics.cpu_util*100).toFixed(1),     color: "#f59e0b", suffix: "%" },
+  ];
+
+  return `<div class="perf-kpi-strip">${kpis.map(k => `
+    <div class="kpi-card" style="--kpi-color:${k.color}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-winner-name">${k.winner}</div>
+      <div class="kpi-winner-val">${k.val}${k.suffix}</div>
+    </div>`).join("")}</div>`;
+}
+
 function buildSummary() {
   const tbody  = document.getElementById("summaryBody");
   const bestEl = document.getElementById("bestText");
   const ranked = getRankedAlgos();
+
+  // Compute max values for bar scaling
+  const allM = ranked.map(r => r.m);
+  const maxWt  = Math.max(...allM.map(m => m.avg_wt))  || 1;
+  const maxTat = Math.max(...allM.map(m => m.avg_tat)) || 1;
+  const maxRt  = Math.max(...allM.map(m => m.avg_rt))  || 1;
+  const maxThr = Math.max(...allM.map(m => m.throughput)) || 1;
+
   let prevM = null, curRank = 1;
 
   ranked.forEach(({ name, m }, i) => {
     if (!prevM || anyDiff(m, prevM)) curRank = i + 1;
     prevM = m;
     const isBest = bestAlgos.includes(name);
+    const rankClass = curRank === 1 ? "r1" : curRank === 2 ? "r2" : curRank === 3 ? "r3" : "";
+    const rankEmoji = curRank === 1 ? "🥇" : curRank === 2 ? "🥈" : curRank === 3 ? "🥉" : `#${curRank}`;
+
+    // Score bars (inverted for lower-is-better metrics)
+    const wtPct  = maxWt  > 0 ? ((maxWt  - m.avg_wt)  / maxWt  * 100).toFixed(0) : 100;
+    const tatPct = maxTat > 0 ? ((maxTat - m.avg_tat) / maxTat * 100).toFixed(0) : 100;
+    const rtPct  = maxRt  > 0 ? ((maxRt  - m.avg_rt)  / maxRt  * 100).toFixed(0) : 100;
+    const thrPct = maxThr > 0 ? (m.throughput / maxThr * 100).toFixed(0) : 100;
+    const cpuPct = (m.cpu_util * 100).toFixed(0);
+
+    const bar = (pct, label) => `<div class="score-cell">
+      <span style="min-width:36px;font-size:12px">${label}</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:${pct}%"></div></div>
+    </div>`;
+
     const tr = document.createElement("tr");
     if (isBest) tr.className = "best-row";
     tr.innerHTML = `
-      <td>${name}${isBest ? '<span class="best-badge">Best</span>' : ''}<span class="rank-badge">#${curRank}</span></td>
-      <td>${m.avg_wt.toFixed(2)}</td>
-      <td>${m.avg_tat.toFixed(2)}</td>
-      <td>${m.avg_rt.toFixed(2)}</td>
-      <td>${m.throughput.toFixed(2)}</td>
-      <td>${(m.cpu_util*100).toFixed(1)}%</td>`;
+      <td>
+        <span class="rank-num ${rankClass}" title="Rank ${curRank}">${rankEmoji}</span>
+        <span style="font-weight:700;color:var(--text)">${name}</span>
+        ${isBest ? '<span class="best-badge">★ Best</span>' : ''}
+      </td>
+      <td>${bar(wtPct,  m.avg_wt.toFixed(2))}</td>
+      <td>${bar(tatPct, m.avg_tat.toFixed(2))}</td>
+      <td>${bar(rtPct,  m.avg_rt.toFixed(2))}</td>
+      <td>${bar(thrPct, m.throughput.toFixed(2))}</td>
+      <td>${bar(cpuPct, (m.cpu_util*100).toFixed(1)+'%')}</td>`;
     tr.querySelectorAll("td").forEach(td => { td.style.opacity="0"; td.style.transform="translateY(6px)"; });
     tbody.appendChild(tr);
   });
 
-  // Build best card (hidden initially)
+  // KPI strip + best card
   const bm = globalResults[bestAlgos[0]].metrics;
-  bestEl.innerHTML = buildBestCardHTML(bm);
+  bestEl.innerHTML = buildKpiStrip() + buildBestCardHTML(bm);
   const card = bestEl.querySelector(".best-card");
   if (card) card.style.visibility = "hidden";
 
@@ -562,7 +614,11 @@ function buildSummary() {
     await animateLetters(document.getElementById("resultsHeading"), 55);
     await animateTableRows(tbody, 240);
     await animateBestRows(tbody, 650);
-    await animateRankBadges(tbody, 180);
+
+    // Reveal rank nums (previously rank badges)
+    tbody.querySelectorAll(".rank-num").forEach((el, i) => {
+      setTimeout(() => el.classList.add("rank-show"), i * 80);
+    });
 
     if (card) { card.style.visibility = "visible"; await revealCard(card); }
 
@@ -573,16 +629,32 @@ function buildSummary() {
 
 function buildBestCardHTML(bm) {
   const names = bestAlgos, isTie = names.length > 1;
-  return `<div class="best-card">
-    <div class="best-card-top"><span class="best-chip">🏆 Best</span><span class="best-sub">${isTie ? "Multiple Optimal" : "Optimal Algorithm"}</span></div>
-    <div class="best-title">${isTie ? `<div class="multi-title-list">${names.map(n=>`<span class="algo-name">${n}</span>`).join("")}</div>` : FULL_NAMES[names[0]]}</div>
-    ${isTie ? "" : `<div class="best-code">${names[0]}</div>`}
-    <div class="best-reason-block">
-      <div class="reason-line"><span class="reason-rank">1</span><span>Highest CPU Utilization (${(bm.cpu_util*100).toFixed(1)}%)</span></div>
-      <div class="reason-line"><span class="reason-rank">2</span><span>Highest Throughput (${bm.throughput.toFixed(2)})</span></div>
-      <div class="reason-line"><span class="reason-rank">3</span><span>Lowest Avg Turnaround (${bm.avg_tat.toFixed(2)})</span></div>
-      <div class="reason-line"><span class="reason-rank">4</span><span>Lowest Avg Waiting (${bm.avg_wt.toFixed(2)})</span></div>
-      <div class="reason-line"><span class="reason-rank">5</span><span>Lowest Avg Response (${bm.avg_rt.toFixed(2)})</span></div>
+  return `<div class="best-card" style="margin-top:20px">
+    <div class="best-card-inner">
+      <div class="best-card-accent"></div>
+      <div class="best-card-body">
+        <div class="best-card-top">
+          <span class="best-chip">🏆 Best Overall</span>
+          <span class="best-sub">${isTie ? "Multiple algorithms tied" : "Optimal Algorithm"}</span>
+        </div>
+        <div class="best-title">${isTie
+          ? `<div class="multi-title-list">${names.map(n=>`<span class="algo-name">${n}</span>`).join("")}</div>`
+          : FULL_NAMES[names[0]]}</div>
+        ${isTie ? "" : `<div class="best-code">${names[0]}</div>`}
+        <div class="best-reason-block">
+          <div class="reason-line"><span class="reason-rank">✓</span><span>CPU Utilization: <strong>${(bm.cpu_util*100).toFixed(1)}%</strong></span></div>
+          <div class="reason-line"><span class="reason-rank">✓</span><span>Throughput: <strong>${bm.throughput.toFixed(2)}</strong> processes/unit</span></div>
+          <div class="reason-line"><span class="reason-rank">✓</span><span>Avg Turnaround: <strong>${bm.avg_tat.toFixed(2)}</strong></span></div>
+          <div class="reason-line"><span class="reason-rank">✓</span><span>Avg Wait: <strong>${bm.avg_wt.toFixed(2)}</strong> · Avg Response: <strong>${bm.avg_rt.toFixed(2)}</strong></span></div>
+        </div>
+      </div>
+      <div class="best-card-metrics">
+        <div class="bm-item"><div class="bm-label">CPU Util</div><div class="bm-val good">${(bm.cpu_util*100).toFixed(1)}%</div></div>
+        <div class="bm-item"><div class="bm-label">Throughput</div><div class="bm-val good">${bm.throughput.toFixed(2)}</div></div>
+        <div class="bm-item"><div class="bm-label">Avg TAT</div><div class="bm-val">${bm.avg_tat.toFixed(2)}</div></div>
+        <div class="bm-item"><div class="bm-label">Avg WT</div><div class="bm-val">${bm.avg_wt.toFixed(2)}</div></div>
+        <div class="bm-item"><div class="bm-label">Avg RT</div><div class="bm-val">${bm.avg_rt.toFixed(2)}</div></div>
+      </div>
     </div>
   </div>`;
 }
@@ -591,30 +663,37 @@ async function scrollToAlgorithms() {
   if (algorithmsStarted) return;
   algorithmsStarted = true;
 
-  const viewBtn   = document.getElementById("viewAlgorithmsBtn");
-  const block     = document.getElementById("algorithmsBlock");
-  const heading   = document.getElementById("algorithmsHeading");
-  const tabBar    = document.getElementById("algoButtons");
-  const detEl     = document.getElementById("details");
+  const viewBtn = document.getElementById("viewAlgorithmsBtn");
+  const block   = document.getElementById("algorithmsBlock");
+  const heading = document.getElementById("algorithmsHeading");
+  const tabBar  = document.getElementById("algoButtons");
+  const detEl   = document.getElementById("details");
 
   if (viewBtn) viewBtn.style.display = "none";
   block.classList.remove("algo-hidden");
   block.style.visibility = "hidden";
   tabBar.style.opacity = "0";
 
-  // Build tabs
-  tabBar.innerHTML = Object.keys(globalResults).map(name => {
+  // Build tabs — ALL algorithms, best gets special style + rank pip
+  const ranked = getRankedAlgos();
+  tabBar.innerHTML = ranked.map(({ name }, i) => {
     const isBest = bestAlgos.includes(name);
+    const rank   = i + 1;
+    const pip    = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
     return `<button class="algo-btn ${isBest ? "algo-best" : ""}"
-      onclick="showDetails('${name}');setActiveTab('${name}')">${name}</button>`;
+      onclick="showDetails('${name}');setActiveTab('${name}')">
+      <span class="btn-rank-pip">${pip}</span>${name}
+    </button>`;
   }).join("");
 
-  // Measure height
+  // Measure height before showing
   renderDetailContent(detEl, bestAlgos[0] || Object.keys(globalResults)[0], false);
   await new Promise(r => requestAnimationFrame(r));
   await new Promise(r => requestAnimationFrame(r));
   detEl.style.minHeight = detEl.offsetHeight + "px";
-  detEl.innerHTML = `<div class="results-empty" style="padding:48px 0"><div class="results-empty-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14l3-3 3 2 4-6" stroke-linecap="round"/></svg></div><div>Select an algorithm tab above</div></div>`;
+  detEl.innerHTML = `<div class="results-empty" style="padding:48px 0">
+    <div class="results-empty-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1"><path d="M4 19V5M4 19h16" stroke-linecap="round"/><path d="M7 14l3-3 3 2 4-6" stroke-linecap="round"/></svg></div>
+    <div>Select an algorithm tab above</div></div>`;
 
   block.scrollIntoView({ behavior: "smooth", block: "start" });
   await waitScrollEnd();
@@ -624,8 +703,8 @@ async function scrollToAlgorithms() {
 
   tabBar.style.opacity = "1";
   const tabs = tabBar.querySelectorAll(".algo-btn");
-  tabs.forEach((b, i) => setTimeout(() => b.classList.add("btn-show"), i * 75));
-  await sleep(tabs.length * 75 + 200);
+  tabs.forEach((b, i) => setTimeout(() => b.classList.add("btn-show"), i * 60));
+  await sleep(tabs.length * 60 + 200);
 }
 
 function showDetails(algo) {
@@ -633,7 +712,7 @@ function showDetails(algo) {
 }
 function setActiveTab(algo) {
   document.querySelectorAll(".algo-btn").forEach(b => b.classList.remove("algo-active"));
-  const t = [...document.querySelectorAll(".algo-btn")].find(b => b.textContent.trim() === algo);
+  const t = [...document.querySelectorAll(".algo-btn")].find(b => b.textContent.replace(/[🥇🥈🥉#\d]/g,'').trim() === algo);
   if (t) t.classList.add("algo-active");
 }
 

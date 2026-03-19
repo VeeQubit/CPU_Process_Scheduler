@@ -29,11 +29,11 @@ def select_best_algorithms(results):
 
     def comparison_key(m):
         return (
-            -m["cpu_util"],       # maximize
-            -m["throughput"],     # maximize
-            m["avg_tat"],         # minimize
-            m["avg_wt"],          # minimize
-            m["avg_rt"]           # minimize
+            -m["cpu_util"],       
+            -m["throughput"],     
+            m["avg_tat"],         
+            m["avg_wt"],          
+            m["avg_rt"]           
         )
 
     best_value = min(comparison_key(m) for m in metrics.values())
@@ -65,14 +65,14 @@ def fcfs(processes):
         ct = end
         tat = ct - p["arrival"]
         wt = tat - p["burst"]
-        rt = start - p["arrival"]   # ✅ NEW
+        rt = start - p["arrival"]   
 
         table.append({
             **p,
             "ct": ct,
             "tat": tat,
             "wt": wt,
-            "rt": rt              # ✅ NEW
+            "rt": rt             
         })
 
         time = end
@@ -105,14 +105,14 @@ def spn(processes):
         ct = end
         tat = ct - p["arrival"]
         wt = tat - p["burst"]
-        rt = start - p["arrival"]   # ✅ NEW
+        rt = start - p["arrival"]   
 
         completed.append({
             **p,
             "ct": ct,
             "tat": tat,
             "wt": wt,
-            "rt": rt              # ✅ NEW
+            "rt": rt              
         })
 
         time = end
@@ -147,7 +147,7 @@ def srtf(processes):
             current = p
             start_time = time
 
-            # ✅ first time execution
+           
             if not p["started"]:
                 p["rt"] = time - p["arrival"]
                 p["started"] = True
@@ -166,7 +166,7 @@ def srtf(processes):
                 "ct": ct,
                 "tat": tat,
                 "wt": wt,
-                "rt": p["rt"]     # ✅ use stored RT
+                "rt": p["rt"]     
             })
 
             procs.remove(p)
@@ -206,7 +206,7 @@ def round_robin(processes, quantum):
 
         start = time
 
-        # ✅ First execution response time
+        
         if not p["started"]:
             p["rt"] = time - p["arrival"]
             p["started"] = True
@@ -233,7 +233,7 @@ def round_robin(processes, quantum):
                 "ct": ct,
                 "tat": tat,
                 "wt": wt,
-                "rt": p["rt"]   # ✅ use stored RT
+                "rt": p["rt"]   
             })
 
     return gantt, completed
@@ -264,14 +264,14 @@ def priority_np(processes):
         ct = end
         tat = ct - p["arrival"]
         wt = tat - p["burst"]
-        rt = start - p["arrival"]   # ✅ NEW
+        rt = start - p["arrival"]   
 
         completed.append({
             **p,
             "ct": ct,
             "tat": tat,
             "wt": wt,
-            "rt": rt               # ✅ NEW
+            "rt": rt               
         })
 
         time = end
@@ -309,7 +309,7 @@ def priority_p(processes):
             current = p
             start_time = time
 
-            # ✅ First execution response time
+            
             if not p["started"]:
                 p["rt"] = time - p["arrival"]
                 p["started"] = True
@@ -329,7 +329,7 @@ def priority_p(processes):
                 "ct": ct,
                 "tat": tat,
                 "wt": wt,
-                "rt": p["rt"]   # ✅ use stored RT
+                "rt": p["rt"]   
             })
 
             procs.remove(p)

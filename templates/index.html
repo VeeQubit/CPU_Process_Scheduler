@@ -201,17 +201,24 @@
           <div class="results-section">
             <div class="results-section-label">Performance Comparison</div>
             <div class="summary-layout">
+              <div id="bestText"></div>
               <div class="summary-table-wrap">
                 <table class="summary-table" id="summaryTable">
-                  <thead><tr><th>Algorithm</th><th>Avg WT</th><th>Avg TAT</th><th>Avg RT</th><th>Throughput</th><th>CPU Util</th></tr></thead>
+                  <thead><tr>
+                    <th style="width:30%">Algorithm</th>
+                    <th>Avg Wait ↓</th>
+                    <th>Avg TAT ↓</th>
+                    <th>Avg Response ↓</th>
+                    <th>Throughput ↑</th>
+                    <th>CPU Util ↑</th>
+                  </tr></thead>
                   <tbody id="summaryBody"></tbody>
                 </table>
-                <div id="viewAlgorithmsBtn" class="view-algo-link">
-                  View Detailed Gantt Charts
+                <div id="viewAlgorithmsBtn" class="view-algo-link" onclick="scrollToAlgorithms()">
+                  View Detailed Gantt Charts per Algorithm
                   <span class="arrow">→</span>
                 </div>
               </div>
-              <div id="bestText"></div>
             </div>
           </div>
 
